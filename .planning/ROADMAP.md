@@ -22,6 +22,13 @@
 
 **Goal:** Bot is responsive with seeded location data and basic command structure
 
+**Plans:** 3 plans
+
+Plans:
+- [ ] 01-01-PLAN.md - Project setup with TypeScript and environment configuration
+- [ ] 01-02-PLAN.md - Database layer with PostgreSQL and location seeding
+- [ ] 01-03-PLAN.md - Telegram bot with all command handlers
+
 **Requirements:**
 - **CMDS-01**: /start shows welcome message with "Create Dog Profile" button
 - **CMDS-02**: /profile shows/edits dog profiles
