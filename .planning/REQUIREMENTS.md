@@ -1,0 +1,157 @@
+# Requirements: PawPals SG
+
+**Defined:** 2025-01-29
+**Core Value:** Dog owners can see exactly how many dogs are at a park right now, so they never arrive to find it empty or overcrowded with incompatible breeds.
+
+## v1 Requirements
+
+Requirements for initial release. Each maps to roadmap phases.
+
+### Dog Profiles
+
+- [ ] **PROF-01**: User can create a dog profile with name
+- [ ] **PROF-02**: User can set dog size (Small/Medium/Large)
+- [ ] **PROF-03**: User can set dog breed from searchable list (with "Other" option)
+- [ ] **PROF-04**: User can set dog age
+- [ ] **PROF-05**: User can add multiple dogs to their account
+- [ ] **PROF-06**: User can view and edit their dog profiles
+- [ ] **PROF-07**: User can delete a dog profile
+
+### Check-In
+
+- [ ] **CHKN-01**: User can initiate check-in via /checkin command
+- [ ] **CHKN-02**: Bot requests one-time location share from user
+- [ ] **CHKN-03**: System validates user is within 200m of a dog run (Haversine formula)
+- [ ] **CHKN-04**: User receives clear error if too far from any dog run
+- [ ] **CHKN-05**: User can select which dog(s) to check in (if multiple)
+- [ ] **CHKN-06**: User can select stay duration (15m, 30m, 60m) with 30m default
+- [ ] **CHKN-07**: User receives confirmation with check-in details
+
+### Session Management
+
+- [ ] **SESS-01**: Sessions auto-expire after selected duration
+- [ ] **SESS-02**: User receives reminder 5 minutes before session expires
+- [ ] **SESS-03**: Expiry reminder includes "Extend 15min" and "Checkout" buttons
+- [ ] **SESS-04**: User can extend session by 15 minutes from reminder
+- [ ] **SESS-05**: User can manually check out anytime via /checkout command
+- [ ] **SESS-06**: Session ends immediately on manual checkout
+- [ ] **SESS-07**: Occupancy count decreases when session ends (expiry or checkout)
+
+### Live Dashboard
+
+- [ ] **DASH-01**: User can view live occupancy via /live command
+- [ ] **DASH-02**: Dashboard shows all 11 dog runs with current dog count
+- [ ] **DASH-03**: Each park shows size breakdown (e.g., "3 Small, 2 Med, 1 Large")
+- [ ] **DASH-04**: User can sort parks by "Most Dogs" (default)
+- [ ] **DASH-05**: User can sort parks by "Nearest to Me" (requires location)
+- [ ] **DASH-06**: Dashboard updates in real-time (reflects current sessions)
+
+### Locations
+
+- [ ] **LOCN-01**: System has 11 pre-loaded Singapore dog runs with coordinates
+- [ ] **LOCN-02**: Each location has: name, region, coordinates, notes
+- [ ] **LOCN-03**: Locations are: Bishan-AMK Park, West Coast Park, Jurong Lake Gardens, ECP Parkland Green, Katong Park, Sembawang Park, Yishun Park, Punggol Park, Tiong Bahru (Sit Wah), The Palawan (Sentosa), Mount Emily Park
+
+### Bot Commands
+
+- [ ] **CMDS-01**: /start shows welcome message with "Create Dog Profile" button
+- [ ] **CMDS-02**: /profile shows/edits dog profiles
+- [ ] **CMDS-03**: /checkin initiates check-in flow
+- [ ] **CMDS-04**: /live shows occupancy dashboard
+- [ ] **CMDS-05**: /checkout ends current session
+
+## v2 Requirements
+
+Deferred to future release. Tracked but not in current roadmap.
+
+### Profile Enhancements
+
+- **PROF-08**: User can set dog temperament (Playful, Chill, Nervous)
+- **PROF-09**: User can upload dog photo
+
+### Social Features
+
+- **SOCL-01**: User can add friends
+- **SOCL-02**: User receives notification when friends check in
+- **SOCL-03**: User can see friend activity in dashboard
+
+### Location Enhancements
+
+- **LOCN-04**: User can rate dog runs (1-5 stars)
+- **LOCN-05**: User can leave reviews for dog runs
+- **LOCN-06**: Dashboard shows historical busyness patterns
+
+### Notifications
+
+- **NOTF-01**: User can set alerts for specific parks ("Notify when 3+ large dogs at West Coast")
+- **NOTF-02**: User can opt into daily digest of nearby activity
+
+### Visual Features
+
+- **VISL-01**: Telegram Mini-App with map view
+- **VISL-02**: Photo sharing on check-in
+
+## Out of Scope
+
+Explicitly excluded. Documented to prevent scope creep.
+
+| Feature | Reason |
+|---------|--------|
+| In-app messaging | Telegram already does this — users can DM directly |
+| Pet services marketplace | Different product vertical, massive scope |
+| Full social feed | Keeps product utility-focused, not social media |
+| Gamification (badges, streaks) | Distracting for utility app |
+| Live location tracking | Battery drain, privacy concerns, over-engineered |
+| Custom map implementation | Telegram bot UI constraints |
+| User-submitted locations | Moderation burden, v1 has curated list |
+
+## Traceability
+
+Which phases cover which requirements. Updated during roadmap creation.
+
+| Requirement | Phase | Status |
+|-------------|-------|--------|
+| CMDS-01 | Phase 1 | Pending |
+| CMDS-02 | Phase 1 | Pending |
+| CMDS-03 | Phase 1 | Pending |
+| CMDS-04 | Phase 1 | Pending |
+| CMDS-05 | Phase 1 | Pending |
+| LOCN-01 | Phase 1 | Pending |
+| LOCN-02 | Phase 1 | Pending |
+| LOCN-03 | Phase 1 | Pending |
+| PROF-01 | Phase 2 | Pending |
+| PROF-02 | Phase 2 | Pending |
+| PROF-03 | Phase 2 | Pending |
+| PROF-04 | Phase 2 | Pending |
+| PROF-05 | Phase 2 | Pending |
+| PROF-06 | Phase 2 | Pending |
+| PROF-07 | Phase 2 | Pending |
+| CHKN-01 | Phase 3 | Pending |
+| CHKN-02 | Phase 3 | Pending |
+| CHKN-03 | Phase 3 | Pending |
+| CHKN-04 | Phase 3 | Pending |
+| CHKN-05 | Phase 3 | Pending |
+| CHKN-06 | Phase 3 | Pending |
+| CHKN-07 | Phase 3 | Pending |
+| SESS-05 | Phase 3 | Pending |
+| SESS-06 | Phase 3 | Pending |
+| SESS-01 | Phase 4 | Pending |
+| SESS-02 | Phase 4 | Pending |
+| SESS-03 | Phase 4 | Pending |
+| SESS-04 | Phase 4 | Pending |
+| SESS-07 | Phase 4 | Pending |
+| DASH-01 | Phase 5 | Pending |
+| DASH-02 | Phase 5 | Pending |
+| DASH-03 | Phase 5 | Pending |
+| DASH-04 | Phase 5 | Pending |
+| DASH-05 | Phase 5 | Pending |
+| DASH-06 | Phase 5 | Pending |
+
+**Coverage:**
+- v1 requirements: 35 total
+- Mapped to phases: 35
+- Unmapped: 0
+
+---
+*Requirements defined: 2025-01-29*
+*Last updated: 2025-01-29 after roadmap creation*
