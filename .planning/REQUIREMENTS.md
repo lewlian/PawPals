@@ -48,17 +48,17 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Locations
 
-- [ ] **LOCN-01**: System has 11 pre-loaded Singapore dog runs with coordinates
-- [ ] **LOCN-02**: Each location has: name, region, coordinates, notes
-- [ ] **LOCN-03**: Locations are: Bishan-AMK Park, West Coast Park, Jurong Lake Gardens, ECP Parkland Green, Katong Park, Sembawang Park, Yishun Park, Punggol Park, Tiong Bahru (Sit Wah), The Palawan (Sentosa), Mount Emily Park
+- [x] **LOCN-01**: System has 11 pre-loaded Singapore dog runs with coordinates
+- [x] **LOCN-02**: Each location has: name, region, coordinates, notes
+- [x] **LOCN-03**: Locations are: Bishan-AMK Park, West Coast Park, Jurong Lake Gardens, ECP Parkland Green, Katong Park, Sembawang Park, Yishun Park, Punggol Park, Tiong Bahru (Sit Wah), The Palawan (Sentosa), Mount Emily Park
 
 ### Bot Commands
 
-- [ ] **CMDS-01**: /start shows welcome message with "Create Dog Profile" button
-- [ ] **CMDS-02**: /profile shows/edits dog profiles
-- [ ] **CMDS-03**: /checkin initiates check-in flow
-- [ ] **CMDS-04**: /live shows occupancy dashboard
-- [ ] **CMDS-05**: /checkout ends current session
+- [x] **CMDS-01**: /start shows welcome message with "Create Dog Profile" button
+- [x] **CMDS-02**: /profile shows/edits dog profiles
+- [x] **CMDS-03**: /checkin initiates check-in flow
+- [x] **CMDS-04**: /live shows occupancy dashboard
+- [x] **CMDS-05**: /checkout ends current session
 
 ## v2 Requirements
 
@@ -111,14 +111,14 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| CMDS-01 | Phase 1 | Pending |
-| CMDS-02 | Phase 1 | Pending |
-| CMDS-03 | Phase 1 | Pending |
-| CMDS-04 | Phase 1 | Pending |
-| CMDS-05 | Phase 1 | Pending |
-| LOCN-01 | Phase 1 | Pending |
-| LOCN-02 | Phase 1 | Pending |
-| LOCN-03 | Phase 1 | Pending |
+| CMDS-01 | Phase 1 | Complete |
+| CMDS-02 | Phase 1 | Complete |
+| CMDS-03 | Phase 1 | Complete |
+| CMDS-04 | Phase 1 | Complete |
+| CMDS-05 | Phase 1 | Complete |
+| LOCN-01 | Phase 1 | Complete |
+| LOCN-02 | Phase 1 | Complete |
+| LOCN-03 | Phase 1 | Complete |
 | PROF-01 | Phase 2 | Pending |
 | PROF-02 | Phase 2 | Pending |
 | PROF-03 | Phase 2 | Pending |
