@@ -11,6 +11,7 @@ import { checkinHandler } from './handlers/checkin.js';
 import { checkoutHandler } from './handlers/checkout.js';
 import { liveHandler } from './handlers/live.js';
 import { createDogProfileWizard } from './scenes/createDogProfile.js';
+import { editDogProfileWizard } from './scenes/editDogProfile.js';
 import { findDogById, deleteDog } from '../db/repositories/dogRepository.js';
 
 const env = validateEnv();
@@ -29,7 +30,10 @@ bot.catch((err, ctx) => {
 bot.use(session());
 
 // Create and register stage with all scenes
-const stage = new Scenes.Stage<BotContext>([createDogProfileWizard]);
+const stage = new Scenes.Stage<BotContext>([
+  createDogProfileWizard,
+  editDogProfileWizard,
+]);
 bot.use(stage.middleware());
 
 // Register command handlers
@@ -67,6 +71,17 @@ bot.action(/^view_dog_(\d+)$/, async (ctx) => {
 bot.action('profile_list', async (ctx) => {
   await ctx.answerCbQuery();
   await profileHandler(ctx);
+});
+
+// Handle edit field buttons - enter edit wizard with field context
+bot.action(/^edit_dog_(name|size|breed|age)_(\d+)$/, async (ctx) => {
+  await ctx.answerCbQuery();
+
+  const field = ctx.match[1] as 'name' | 'size' | 'breed' | 'age';
+  const dogId = parseInt(ctx.match[2] ?? '0', 10);
+
+  // Enter edit wizard with initial state
+  await ctx.scene.enter('edit-dog-profile', { dogId, field });
 });
 
 // Handle delete dog request - show confirmation
