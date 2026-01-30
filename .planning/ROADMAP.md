@@ -150,6 +150,12 @@ Plans:
 
 **Goal:** Users can see real-time occupancy of all dog runs with size breakdowns before visiting
 
+**Plans:** 2 plans
+
+Plans:
+- [ ] 05-01-PLAN.md - Core dashboard with occupancy query and display formatting
+- [ ] 05-02-PLAN.md - Dashboard interactivity (sort, refresh, nearest location)
+
 **Requirements:**
 - **DASH-01**: User can view live occupancy via /live command
 - **DASH-02**: Dashboard shows all 11 dog runs with current dog count
