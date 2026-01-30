@@ -9,22 +9,22 @@ See: .planning/PROJECT.md (updated 2025-01-29)
 
 **Core value:** Dog owners can see exactly how many dogs are at a park right now, so they never arrive to find it empty or overcrowded with incompatible breeds.
 
-**Current focus:** Phase 3 - Core Check-In/Out ready to begin
+**Current focus:** Phase 3 - Core Check-In/Out (data layer complete)
 
 ## Current Position
 
-**Phase:** 2 of 6 (Dog Profiles) - COMPLETE
-**Plan:** 02-03 completed (3 of 3 in phase)
-**Status:** Phase 2 complete, ready for Phase 3
-**Last activity:** 2026-01-30 - Completed 02-03-PLAN.md
+**Phase:** 3 of 6 (Core Check-In/Out) - IN PROGRESS
+**Plan:** 03-01 completed (1 of 3 in phase)
+**Status:** Phase 3 in progress
+**Last activity:** 2026-01-30 - Completed 03-01-PLAN.md
 
-**Progress:** [████████████░░░░░░░░] 50%
+**Progress:** [██████████████░░░░░░] 78%
 
 ## Performance Metrics
 
-**Plans executed:** 6/12 (estimated)
-**Requirements completed:** 11/35
-**Success criteria met:** 28/35
+**Plans executed:** 7/9
+**Requirements completed:** 13/35
+**Success criteria met:** 30/35
 
 ## Progress
 
@@ -32,7 +32,7 @@ See: .planning/PROJECT.md (updated 2025-01-29)
 |-------|--------|-------|--------------|-------|
 | 1 - Foundation & Setup | ● Complete | 3/3 | 8/8 | Bot infrastructure + locations |
 | 2 - Dog Profiles | ● Complete | 3/3 | 7/7 | Full CRUD for dog profiles |
-| 3 - Core Check-In/Out | ○ Pending | 0/3 | 0/9 | Geofencing + basic sessions |
+| 3 - Core Check-In/Out | ◐ In Progress | 1/3 | 2/9 | Session data layer complete |
 | 4 - Session Automation | ○ Pending | 0/2 | 0/5 | Auto-expiry + reminders |
 | 5 - Live Dashboard | ○ Pending | 0/2 | 0/6 | Real-time occupancy |
 | 6 - Production Deployment | ○ Pending | 0/2 | 0/0 | Webhook setup + monitoring |
@@ -66,10 +66,15 @@ See: .planning/PROJECT.md (updated 2025-01-29)
 - 2026-01-30: [02-03] Edit wizard receives field context via scene enter state
 - 2026-01-30: [02-03] Profile handler detects callback context for editMessageText vs reply
 - 2026-01-30: [02-03] Delete confirmation uses separate callback (confirm_delete) for safety
+- 2026-01-30: [03-01] 200m geofence radius for check-in validation
+- 2026-01-30: [03-01] Multi-dog sessions via session_dogs junction table
+- 2026-01-30: [03-01] Haversine distance for geographic proximity calculation
+- 2026-01-30: [03-01] Status CHECK constraint enforces valid session states (active, expired, completed)
+- 2026-01-30: [03-01] Partial indexes on status field optimize active session queries
 
 ### Active TODOs
 
-- Begin Phase 3: Core Check-In/Out
+- Continue Phase 3: Check-in wizard implementation (03-02)
 
 ### Known Blockers
 
@@ -77,7 +82,8 @@ None
 
 ## Recent Activity
 
-- 2026-01-30: **Completed 02-03-PLAN.md (Profile command integration) - Phase 2 complete!**
+- 2026-01-30: **Completed 03-01-PLAN.md (Session data layer)**
+- 2026-01-30: Completed 02-03-PLAN.md (Profile command integration) - Phase 2 complete!
 - 2026-01-30: Completed 02-02-PLAN.md (Profile wizard implementation)
 - 2026-01-30: Completed 02-01-PLAN.md (Data layer for dog profiles)
 - 2026-01-30: Completed 01-03-PLAN.md (Telegram bot initialization) - Phase 1 complete!
@@ -86,7 +92,6 @@ None
 - 2025-01-29: Project initialized via `/gsd:new-project`
 - 2025-01-29: Requirements defined (35 v1, 11 v2)
 - 2025-01-29: Research completed (6-phase structure validated)
-- 2025-01-29: Roadmap created (6 phases, 100% requirement coverage)
 
 ## Session Continuity
 
@@ -95,18 +100,18 @@ None
 **Current milestone:** v1.0 - Core check-in/dashboard features
 
 **Last session:** 2026-01-30
-**Stopped at:** Completed 02-03-PLAN.md - Phase 2 complete
+**Stopped at:** Completed 03-01-PLAN.md - Session data layer
 **Resume file:** None
 
-**Next action:** Begin Phase 3 - Core Check-In/Out (03-01-PLAN.md)
+**Next action:** Continue Phase 3 - Check-in wizard (03-02-PLAN.md)
 
 **Context for next session:**
-- **Phase 2 complete!** Full dog profile CRUD operational
-- /profile shows all user's dogs with view/edit/delete options
-- createDogProfileWizard for new dogs (name -> size -> breed -> age -> confirm)
-- editDogProfileWizard for editing individual fields
-- All 7 PROF requirements satisfied (PROF-01 through PROF-07)
-- Ready for check-in flow: user selects dog, shares location, system matches to nearest dog run
+- **Phase 3 started!** Session data layer complete
+- Sessions table tracks check-in/checkout with multi-dog support
+- sessionRepository provides createSession, checkoutSession, addDogsToSession
+- validateGeofence uses Haversine distance with 200m radius
+- CheckInWizardState type defined for check-in flow
+- Ready for check-in wizard: dog selection, location validation, duration input
 
 ---
 *State file for GSD workflow tracking*
