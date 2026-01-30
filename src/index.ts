@@ -31,6 +31,7 @@ async function main(): Promise<void> {
       webhook: {
         domain: env.WEBHOOK_DOMAIN,
         port: env.PORT,
+        host: '0.0.0.0',
         path: '/webhook',
         secretToken: env.WEBHOOK_SECRET,
       },
