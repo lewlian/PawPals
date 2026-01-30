@@ -1,4 +1,5 @@
 import { Markup } from 'telegraf';
+import haversineDistance from 'haversine-distance';
 import type { OccupancyData, ParkDisplay } from '../../types/dashboard.js';
 
 /**
@@ -37,6 +38,41 @@ export function sortByDogCount(parks: OccupancyData[]): OccupancyData[] {
       return b.totalDogs - a.totalDogs;
     }
     // Secondary sort: alphabetical by name
+    return a.locationName.localeCompare(b.locationName);
+  });
+}
+
+/**
+ * Sort parks by distance from user (ascending), with alphabetical tiebreaker
+ * Returns ParkDisplay[] with distanceKm populated for each park
+ */
+export function sortByDistance(
+  parks: OccupancyData[],
+  userLat: number,
+  userLon: number
+): ParkDisplay[] {
+  // Calculate distance for each park
+  const parksWithDistance: ParkDisplay[] = parks.map(park => {
+    const distanceMeters = haversineDistance(
+      { latitude: userLat, longitude: userLon },
+      { latitude: park.latitude, longitude: park.longitude }
+    );
+    const distanceKm = Math.round((distanceMeters / 1000) * 10) / 10; // Round to 1 decimal
+
+    return {
+      ...park,
+      distanceKm,
+      isUserHere: false, // Will be set by caller if needed
+    };
+  });
+
+  // Sort by distance ascending, alphabetical tiebreaker
+  return parksWithDistance.sort((a, b) => {
+    const distA = a.distanceKm ?? Infinity;
+    const distB = b.distanceKm ?? Infinity;
+    if (distA !== distB) {
+      return distA - distB;
+    }
     return a.locationName.localeCompare(b.locationName);
   });
 }
