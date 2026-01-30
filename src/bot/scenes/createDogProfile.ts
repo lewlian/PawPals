@@ -26,8 +26,9 @@ function getWizardState(ctx: BotContext): WizardState {
 }
 
 // Step 0: Entry - ask for dog name
+// Use middleware that triggers on any update type (including scene.enter from callback)
 const stepEntry = new Composer<BotContext>();
-stepEntry.on('message', async (ctx) => {
+stepEntry.use(async (ctx) => {
   const state = getWizardState(ctx);
   state.dogData = {};
 

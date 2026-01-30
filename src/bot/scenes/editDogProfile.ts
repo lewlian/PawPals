@@ -37,8 +37,9 @@ function formatSizeLabel(size: string): string {
 }
 
 // Step 0: Entry - display prompt based on field being edited
+// Use middleware that triggers on any update type (including scene.enter from callback)
 const stepEntry = new Composer<BotContext>();
-stepEntry.on('message', async (ctx) => {
+stepEntry.use(async (ctx) => {
   const state = getEditState(ctx);
 
   // Fetch current dog to get name and current value
