@@ -1,6 +1,6 @@
 # Project State: PawPals SG
 
-**Current Phase:** 04-session-automation
+**Current Phase:** 05-live-dashboard
 **Last Updated:** 2026-01-30
 
 ## Project Reference
@@ -9,22 +9,22 @@ See: .planning/PROJECT.md (updated 2025-01-29)
 
 **Core value:** Dog owners can see exactly how many dogs are at a park right now, so they never arrive to find it empty or overcrowded with incompatible breeds.
 
-**Current focus:** Phase 4 - Session Automation (expiry queries and callbacks complete)
+**Current focus:** Phase 5 - Live Dashboard (real-time occupancy display)
 
 ## Current Position
 
-**Phase:** 4 of 6 (Session Automation) - In progress
-**Plan:** 04-01 completed (1 of 2 in phase)
-**Status:** In progress
-**Last activity:** 2026-01-30 - Completed 04-01-PLAN.md
+**Phase:** 5 of 6 (Live Dashboard) - Pending
+**Plan:** 0 of 2 in phase
+**Status:** Phase 4 complete, ready for Phase 5
+**Last activity:** 2026-01-30 - Completed 04-02-PLAN.md
 
-**Progress:** [██████████████████░░] 90%
+**Progress:** [███████████████████░] 95%
 
 ## Performance Metrics
 
-**Plans executed:** 10/11
-**Requirements completed:** 23/35
-**Success criteria met:** 46/46
+**Plans executed:** 11/13
+**Requirements completed:** 28/35
+**Success criteria met:** 54/54
 
 ## Progress
 
@@ -33,7 +33,7 @@ See: .planning/PROJECT.md (updated 2025-01-29)
 | 1 - Foundation & Setup | ● Complete | 3/3 | 8/8 | Bot infrastructure + locations |
 | 2 - Dog Profiles | ● Complete | 3/3 | 7/7 | Full CRUD for dog profiles |
 | 3 - Core Check-In/Out | ● Complete | 3/3 | 9/9 | Check-in/checkout fully functional |
-| 4 - Session Automation | ◐ In Progress | 1/2 | 0/5 | Expiry queries + callbacks done |
+| 4 - Session Automation | ● Complete | 2/2 | 5/5 | Background expiry job operational |
 | 5 - Live Dashboard | ○ Pending | 0/2 | 0/6 | Real-time occupancy |
 | 6 - Production Deployment | ○ Pending | 0/2 | 0/0 | Webhook setup + monitoring |
 
@@ -81,10 +81,14 @@ See: .planning/PROJECT.md (updated 2025-01-29)
 - 2026-01-30: [04-01] ActionContext intersection type adds match property for regex callbacks
 - 2026-01-30: [04-01] 6-minute reminder window accounts for polling interval variance
 - 2026-01-30: [04-01] Singapore locale (en-SG) for time formatting in extend confirmation
+- 2026-01-30: [04-02] 30-second polling interval balances responsiveness with resource efficiency
+- 2026-01-30: [04-02] In-memory reminder tracking accepts re-send on restart near reminder time
+- 2026-01-30: [04-02] Catch-up processing on startup handles missed expiries during downtime
 
 ### Active TODOs
 
-- Complete Phase 4: Session Automation (04-02 background job remaining)
+- Execute Phase 5: Live Dashboard (05-01, 05-02)
+- Execute Phase 6: Production Deployment (06-01, 06-02)
 
 ### Known Blockers
 
@@ -92,7 +96,8 @@ None
 
 ## Recent Activity
 
-- 2026-01-30: **Completed 04-01-PLAN.md (Session expiry queries and callback handlers)**
+- 2026-01-30: **Completed 04-02-PLAN.md (Session expiry background job) - Phase 4 complete!**
+- 2026-01-30: Completed 04-01-PLAN.md (Session expiry queries and callback handlers)
 - 2026-01-30: Completed 03-03-PLAN.md (Check-in/out command integration) - Phase 3 complete!
 - 2026-01-30: Completed 03-02-PLAN.md (Check-in wizard implementation)
 - 2026-01-30: Completed 03-01-PLAN.md (Session data layer)
@@ -113,21 +118,19 @@ None
 **Current milestone:** v1.0 - Core check-in/dashboard features
 
 **Last session:** 2026-01-30
-**Stopped at:** Completed 04-01-PLAN.md - Session expiry queries and callbacks
+**Stopped at:** Completed 04-02-PLAN.md - Session expiry background job
 **Resume file:** None
 
-**Next action:** Execute 04-02-PLAN.md - Background job for session expiry
+**Next action:** Execute 05-01-PLAN.md - Occupancy data layer
 
 **Context for next session:**
-- **04-01 complete!** Session repository extended with expiry management functions
-- getSessionsNeedingReminder() returns sessions expiring within 6 minutes
-- getExpiredSessions() returns sessions past their expiry time
-- expireSessions() batch updates session status to 'expired'
-- extendSession() adds minutes to expires_at timestamp
-- handleExtendCallback validates session active before extending
-- handleCheckoutCallback validates session active before checkout
-- Callback patterns registered: extend_{id}_{minutes}, checkout_{id}
-- Ready for: Background polling job to call these functions and send notifications
+- **Phase 4 complete!** Session automation fully operational
+- Background job polls every 30 seconds for session expiry
+- Reminders sent 5 minutes before expiry with extend/checkout buttons
+- Expiry notifications sent when sessions auto-expire
+- Extended sessions receive new reminders (clearReminderTracking)
+- Jobs start on bot startup, stop on graceful shutdown
+- Ready for: Live dashboard to display real-time occupancy data
 
 ---
 *State file for GSD workflow tracking*
