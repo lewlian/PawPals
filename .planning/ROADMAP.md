@@ -2,8 +2,8 @@
 
 **Created:** 2025-01-29
 **Milestone:** v1.0
-**Phases:** 6
-**Requirements:** 35 mapped
+**Phases:** 7
+**Requirements:** 39 mapped
 
 ## Overview
 
@@ -15,6 +15,7 @@
 | 4 | Session Automation | Sessions expire automatically with user notifications | 5 | 4 |
 | 5 | Live Dashboard | Users can see real-time occupancy before visiting | 6 | 4 |
 | 6 | Production Deployment | Bot is running reliably in production with webhooks | 0 | 3 |
+| 7 | UI Polish | Bot has intuitive quick-access menu and consistent emoji styling | 4 | 4 |
 
 ## Phases
 
@@ -201,6 +202,34 @@ Plans:
 
 ---
 
+### Phase 7: UI Polish
+
+**Goal:** Bot has intuitive quick-access menu buttons and consistent emoji styling throughout
+
+**Plans:** 2 plans
+
+Plans:
+- [ ] 07-01-PLAN.md - Telegram menu commands and reply keyboard buttons
+- [ ] 07-02-PLAN.md - Emoji styling for messages, buttons, and dashboard
+
+**Status:** Not started
+
+**Requirements:**
+- **UIPOL-01**: Bot has Telegram menu button showing all available commands
+- **UIPOL-02**: Main screen shows reply keyboard with quick-access buttons (Check In, Live, Profile, Checkout)
+- **UIPOL-03**: All messages use consistent emoji prefixes for headers and status indicators
+- **UIPOL-04**: All inline buttons have emoji prefixes for visual clarity
+
+**Success Criteria:**
+1. User can tap "/" menu button and see all commands with descriptions
+2. After /start, user sees persistent reply keyboard with 4 quick-action buttons
+3. Dashboard, check-in confirmations, and reminders use emoji formatting
+4. All inline buttons (Create Profile, Edit, Delete, Extend, etc.) have emoji prefixes
+
+**Dependencies:** Phase 6 (deployed bot to apply UI changes)
+
+---
+
 ## Coverage Validation
 
 All v1 requirements mapped: Yes
@@ -213,7 +242,8 @@ All v1 requirements mapped: Yes
 | DASH (Live Dashboard) | 6 | 6 | 100% |
 | LOCN (Locations) | 3 | 3 | 100% |
 | CMDS (Bot Commands) | 5 | 5 | 100% |
-| **Total** | **35** | **35** | **100%** |
+| UIPOL (UI Polish) | 4 | 4 | 100% |
+| **Total** | **39** | **39** | **100%** |
 
 ### Requirement Distribution
 
@@ -223,6 +253,7 @@ All v1 requirements mapped: Yes
 **Phase 4:** SESS-01, SESS-02, SESS-03, SESS-04, SESS-07 (5 requirements)
 **Phase 5:** DASH-01, DASH-02, DASH-03, DASH-04, DASH-05, DASH-06 (6 requirements)
 **Phase 6:** (0 requirements - deployment only)
+**Phase 7:** UIPOL-01, UIPOL-02, UIPOL-03, UIPOL-04 (4 requirements)
 
 ---
 *Roadmap created: 2025-01-29*

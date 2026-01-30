@@ -60,6 +60,13 @@ Requirements for initial release. Each maps to roadmap phases.
 - [x] **CMDS-04**: /live shows occupancy dashboard
 - [x] **CMDS-05**: /checkout ends current session
 
+### UI Polish
+
+- [ ] **UIPOL-01**: Bot has Telegram menu button showing all available commands
+- [ ] **UIPOL-02**: Main screen shows reply keyboard with quick-access buttons (Check In, Live, Profile, Checkout)
+- [ ] **UIPOL-03**: All messages use consistent emoji prefixes for headers and status indicators
+- [ ] **UIPOL-04**: All inline buttons have emoji prefixes for visual clarity
+
 ## v2 Requirements
 
 Deferred to future release. Tracked but not in current roadmap.
@@ -147,9 +154,14 @@ Which phases cover which requirements. Updated during roadmap creation.
 | DASH-05 | Phase 5 | Complete |
 | DASH-06 | Phase 5 | Complete |
 
+| UIPOL-01 | Phase 7 | Not Started |
+| UIPOL-02 | Phase 7 | Not Started |
+| UIPOL-03 | Phase 7 | Not Started |
+| UIPOL-04 | Phase 7 | Not Started |
+
 **Coverage:**
-- v1 requirements: 35 total
-- Mapped to phases: 35
+- v1 requirements: 39 total
+- Mapped to phases: 39
 - Unmapped: 0
 
 ---
