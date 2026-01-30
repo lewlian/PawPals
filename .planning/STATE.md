@@ -1,6 +1,6 @@
 # Project State: PawPals SG
 
-**Current Phase:** 02-dog-profiles
+**Current Phase:** 03-check-in-out
 **Last Updated:** 2026-01-30
 
 ## Project Reference
@@ -9,29 +9,29 @@ See: .planning/PROJECT.md (updated 2025-01-29)
 
 **Core value:** Dog owners can see exactly how many dogs are at a park right now, so they never arrive to find it empty or overcrowded with incompatible breeds.
 
-**Current focus:** Phase 2 - Dog Profiles in progress
+**Current focus:** Phase 3 - Core Check-In/Out ready to begin
 
 ## Current Position
 
-**Phase:** 2 of 6 (Dog Profiles)
-**Plan:** 02-02 completed (2 of 3 in phase)
-**Status:** In progress
-**Last activity:** 2026-01-30 - Completed 02-02-PLAN.md
+**Phase:** 2 of 6 (Dog Profiles) - COMPLETE
+**Plan:** 02-03 completed (3 of 3 in phase)
+**Status:** Phase 2 complete, ready for Phase 3
+**Last activity:** 2026-01-30 - Completed 02-03-PLAN.md
 
-**Progress:** [██████████░░░░░░░░░░] 42%
+**Progress:** [████████████░░░░░░░░] 50%
 
 ## Performance Metrics
 
-**Plans executed:** 5/12 (estimated)
-**Requirements completed:** 8/35
-**Success criteria met:** 22/35
+**Plans executed:** 6/12 (estimated)
+**Requirements completed:** 11/35
+**Success criteria met:** 28/35
 
 ## Progress
 
 | Phase | Status | Plans | Requirements | Notes |
 |-------|--------|-------|--------------|-------|
 | 1 - Foundation & Setup | ● Complete | 3/3 | 8/8 | Bot infrastructure + locations |
-| 2 - Dog Profiles | ◐ In Progress | 2/3 | 4/7 | Wizard implementation complete |
+| 2 - Dog Profiles | ● Complete | 3/3 | 7/7 | Full CRUD for dog profiles |
 | 3 - Core Check-In/Out | ○ Pending | 0/3 | 0/9 | Geofencing + basic sessions |
 | 4 - Session Automation | ○ Pending | 0/2 | 0/5 | Auto-expiry + reminders |
 | 5 - Live Dashboard | ○ Pending | 0/2 | 0/6 | Real-time occupancy |
@@ -63,10 +63,13 @@ See: .planning/PROJECT.md (updated 2025-01-29)
 - 2026-01-30: [02-02] In-memory session store for development (redis persistence deferred)
 - 2026-01-30: [02-02] 6 breeds per page for inline keyboard pagination
 - 2026-01-30: [02-02] Breed search shows up to 6 matches with browse fallback
+- 2026-01-30: [02-03] Edit wizard receives field context via scene enter state
+- 2026-01-30: [02-03] Profile handler detects callback context for editMessageText vs reply
+- 2026-01-30: [02-03] Delete confirmation uses separate callback (confirm_delete) for safety
 
 ### Active TODOs
 
-- Complete 02-03-PLAN.md (Profile command integration)
+- Begin Phase 3: Core Check-In/Out
 
 ### Known Blockers
 
@@ -74,7 +77,8 @@ None
 
 ## Recent Activity
 
-- 2026-01-30: **Completed 02-02-PLAN.md (Profile wizard implementation)**
+- 2026-01-30: **Completed 02-03-PLAN.md (Profile command integration) - Phase 2 complete!**
+- 2026-01-30: Completed 02-02-PLAN.md (Profile wizard implementation)
 - 2026-01-30: Completed 02-01-PLAN.md (Data layer for dog profiles)
 - 2026-01-30: Completed 01-03-PLAN.md (Telegram bot initialization) - Phase 1 complete!
 - 2026-01-30: Completed 01-02-PLAN.md (Database setup with PostgreSQL)
@@ -91,18 +95,18 @@ None
 **Current milestone:** v1.0 - Core check-in/dashboard features
 
 **Last session:** 2026-01-30
-**Stopped at:** Completed 02-02-PLAN.md
+**Stopped at:** Completed 02-03-PLAN.md - Phase 2 complete
 **Resume file:** None
 
-**Next action:** Execute 02-03-PLAN.md (Profile command integration)
+**Next action:** Begin Phase 3 - Core Check-In/Out (03-01-PLAN.md)
 
 **Context for next session:**
-- **Phase 2 plan 2 complete!** Profile wizard now functional
-- WizardScene 'create-dog-profile' with 5-step flow (name -> size -> breed -> age -> confirm)
-- Session middleware wired (in-memory for dev, redis can be added later)
-- Breed search supports text filtering and paginated browse (6 per page)
-- "Create Dog Profile" button in /start now enters wizard
-- Ready for /profile command to view/manage existing profiles in 02-03
+- **Phase 2 complete!** Full dog profile CRUD operational
+- /profile shows all user's dogs with view/edit/delete options
+- createDogProfileWizard for new dogs (name -> size -> breed -> age -> confirm)
+- editDogProfileWizard for editing individual fields
+- All 7 PROF requirements satisfied (PROF-01 through PROF-07)
+- Ready for check-in flow: user selects dog, shares location, system matches to nearest dog run
 
 ---
 *State file for GSD workflow tracking*
