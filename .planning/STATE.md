@@ -1,6 +1,6 @@
 # Project State: PawPals SG
 
-**Current Phase:** 03-check-in-out
+**Current Phase:** 04-session-automation
 **Last Updated:** 2026-01-30
 
 ## Project Reference
@@ -9,22 +9,22 @@ See: .planning/PROJECT.md (updated 2025-01-29)
 
 **Core value:** Dog owners can see exactly how many dogs are at a park right now, so they never arrive to find it empty or overcrowded with incompatible breeds.
 
-**Current focus:** Phase 3 - Core Check-In/Out (data layer complete)
+**Current focus:** Phase 4 - Session Automation (expiry queries and callbacks complete)
 
 ## Current Position
 
-**Phase:** 3 of 6 (Core Check-In/Out) - COMPLETE
-**Plan:** 03-03 completed (3 of 3 in phase)
-**Status:** Phase 3 complete
-**Last activity:** 2026-01-30 - Completed 03-03-PLAN.md
+**Phase:** 4 of 6 (Session Automation) - In progress
+**Plan:** 04-01 completed (1 of 2 in phase)
+**Status:** In progress
+**Last activity:** 2026-01-30 - Completed 04-01-PLAN.md
 
-**Progress:** [████████████████████] 100%
+**Progress:** [██████████████████░░] 90%
 
 ## Performance Metrics
 
-**Plans executed:** 9/9
+**Plans executed:** 10/11
 **Requirements completed:** 23/35
-**Success criteria met:** 43/43
+**Success criteria met:** 46/46
 
 ## Progress
 
@@ -33,7 +33,7 @@ See: .planning/PROJECT.md (updated 2025-01-29)
 | 1 - Foundation & Setup | ● Complete | 3/3 | 8/8 | Bot infrastructure + locations |
 | 2 - Dog Profiles | ● Complete | 3/3 | 7/7 | Full CRUD for dog profiles |
 | 3 - Core Check-In/Out | ● Complete | 3/3 | 9/9 | Check-in/checkout fully functional |
-| 4 - Session Automation | ○ Pending | 0/2 | 0/5 | Auto-expiry + reminders |
+| 4 - Session Automation | ◐ In Progress | 1/2 | 0/5 | Expiry queries + callbacks done |
 | 5 - Live Dashboard | ○ Pending | 0/2 | 0/6 | Real-time occupancy |
 | 6 - Production Deployment | ○ Pending | 0/2 | 0/0 | Webhook setup + monitoring |
 
@@ -78,10 +78,13 @@ See: .planning/PROJECT.md (updated 2025-01-29)
 - 2026-01-30: [03-03] Scene ID 'check-in-wizard' used to match wizard registration
 - 2026-01-30: [03-03] Location messages outside wizard show guidance to use /checkin
 - 2026-01-30: [03-03] Global location handler checks ctx.scene.current to avoid interfering with wizard
+- 2026-01-30: [04-01] ActionContext intersection type adds match property for regex callbacks
+- 2026-01-30: [04-01] 6-minute reminder window accounts for polling interval variance
+- 2026-01-30: [04-01] Singapore locale (en-SG) for time formatting in extend confirmation
 
 ### Active TODOs
 
-- Start Phase 4: Session Automation (auto-expiry and reminder notifications)
+- Complete Phase 4: Session Automation (04-02 background job remaining)
 
 ### Known Blockers
 
@@ -89,7 +92,8 @@ None
 
 ## Recent Activity
 
-- 2026-01-30: **Completed 03-03-PLAN.md (Check-in/out command integration) - Phase 3 complete!**
+- 2026-01-30: **Completed 04-01-PLAN.md (Session expiry queries and callback handlers)**
+- 2026-01-30: Completed 03-03-PLAN.md (Check-in/out command integration) - Phase 3 complete!
 - 2026-01-30: Completed 03-02-PLAN.md (Check-in wizard implementation)
 - 2026-01-30: Completed 03-01-PLAN.md (Session data layer)
 - 2026-01-30: Completed 02-03-PLAN.md (Profile command integration) - Phase 2 complete!
@@ -109,20 +113,21 @@ None
 **Current milestone:** v1.0 - Core check-in/dashboard features
 
 **Last session:** 2026-01-30
-**Stopped at:** Completed 03-03-PLAN.md - Check-in/out command integration
+**Stopped at:** Completed 04-01-PLAN.md - Session expiry queries and callbacks
 **Resume file:** None
 
-**Next action:** Start Phase 4 - Session Automation
+**Next action:** Execute 04-02-PLAN.md - Background job for session expiry
 
 **Context for next session:**
-- **Phase 3 complete!** Full check-in/checkout functionality operational
-- /checkin command enters wizard with location validation (200m geofence)
-- /checkout command ends sessions with duration calculation and confirmation
-- Multi-dog session support via session_dogs junction table
-- Session status field supports 'active', 'expired', 'completed' states
-- Session expiry timestamps set during check-in
-- Global location handler guides users to use /checkin command
-- Ready for: Auto-expiry background job, reminder notifications, session cleanup
+- **04-01 complete!** Session repository extended with expiry management functions
+- getSessionsNeedingReminder() returns sessions expiring within 6 minutes
+- getExpiredSessions() returns sessions past their expiry time
+- expireSessions() batch updates session status to 'expired'
+- extendSession() adds minutes to expires_at timestamp
+- handleExtendCallback validates session active before extending
+- handleCheckoutCallback validates session active before checkout
+- Callback patterns registered: extend_{id}_{minutes}, checkout_{id}
+- Ready for: Background polling job to call these functions and send notifications
 
 ---
 *State file for GSD workflow tracking*
