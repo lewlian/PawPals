@@ -10,6 +10,10 @@ import {
 import { checkinHandler } from './handlers/checkin.js';
 import { checkoutHandler } from './handlers/checkout.js';
 import { liveHandler } from './handlers/live.js';
+import {
+  handleExtendCallback,
+  handleCheckoutCallback,
+} from './handlers/sessionCallbacks.js';
 import { createDogProfileWizard } from './scenes/createDogProfile.js';
 import { editDogProfileWizard } from './scenes/editDogProfile.js';
 import { checkInWizard } from './scenes/checkInWizard.js';
@@ -132,6 +136,10 @@ bot.action(/^confirm_delete_(\d+)$/, async (ctx) => {
     );
   }
 });
+
+// Session automation callback handlers
+bot.action(/^extend_(\d+)_(\d+)$/, handleExtendCallback);
+bot.action(/^checkout_(\d+)$/, handleCheckoutCallback);
 
 // Handle unexpected location messages (outside wizard)
 bot.on('location', async (ctx) => {
