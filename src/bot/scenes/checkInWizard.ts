@@ -12,8 +12,9 @@ function getWizardState(ctx: BotContext): CheckInWizardState {
 }
 
 // Step 0: Entry point - request location
+// Use middleware that triggers on any update type (including scene.enter from callback or command)
 const stepEntry = new Composer<BotContext>();
-stepEntry.on('message', async (ctx) => {
+stepEntry.use(async (ctx) => {
   // Initialize wizard state properties
   const state = ctx.wizard.state as CheckInWizardState;
   state.locationId = undefined;
@@ -54,7 +55,13 @@ stepLocation.on('location', async (ctx) => {
     const nearestName = result.nearestLocation?.name ?? 'a dog run';
 
     await ctx.reply(
-      `You're too far from any dog run! Nearest: ${nearestName} (${distanceKm}km away). You must be within 200 meters to check in.`
+      `You're too far from any dog run to check in.\n\n` +
+      `Nearest: ${nearestName} (${distanceKm}km away)\n` +
+      `Required: Within 200 meters\n\n` +
+      `Try again when you arrive at a dog run, or use:\n` +
+      `- /live to see which parks have dogs right now\n` +
+      `- /profile to manage your dog profiles`,
+      Markup.removeKeyboard()
     );
     return ctx.scene.leave();
   }
@@ -64,7 +71,7 @@ stepLocation.on('location', async (ctx) => {
   state.locationId = result.nearestLocation!.id;
   state.locationName = result.nearestLocation!.name;
 
-  await ctx.reply(`Location confirmed: ${state.locationName}`);
+  await ctx.reply(`Location confirmed: ${state.locationName}\n\nLoading your dogs...`);
   return ctx.wizard.next();
 });
 
@@ -72,7 +79,7 @@ stepLocation.on('text', async (ctx) => {
   const text = ctx.message.text.trim();
 
   if (text === 'Cancel') {
-    await ctx.reply('Check-in cancelled.');
+    await ctx.reply('Check-in cancelled.', Markup.removeKeyboard());
     return ctx.scene.leave();
   }
 
@@ -80,9 +87,10 @@ stepLocation.on('text', async (ctx) => {
 });
 
 // Step 2: Fetch and display dog selection
+// Use middleware that triggers immediately when entering this step (after location validation)
 const stepDogs = new Composer<BotContext>();
 
-stepDogs.on('message', async (ctx) => {
+stepDogs.use(async (ctx) => {
   const telegramId = ctx.from?.id;
   const firstName = ctx.from?.first_name;
   const username = ctx.from?.username;
