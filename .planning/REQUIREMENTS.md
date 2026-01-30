@@ -9,13 +9,13 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Dog Profiles
 
-- [ ] **PROF-01**: User can create a dog profile with name
-- [ ] **PROF-02**: User can set dog size (Small/Medium/Large)
-- [ ] **PROF-03**: User can set dog breed from searchable list (with "Other" option)
-- [ ] **PROF-04**: User can set dog age
-- [ ] **PROF-05**: User can add multiple dogs to their account
-- [ ] **PROF-06**: User can view and edit their dog profiles
-- [ ] **PROF-07**: User can delete a dog profile
+- [x] **PROF-01**: User can create a dog profile with name
+- [x] **PROF-02**: User can set dog size (Small/Medium/Large)
+- [x] **PROF-03**: User can set dog breed from searchable list (with "Other" option)
+- [x] **PROF-04**: User can set dog age
+- [x] **PROF-05**: User can add multiple dogs to their account
+- [x] **PROF-06**: User can view and edit their dog profiles
+- [x] **PROF-07**: User can delete a dog profile
 
 ### Check-In
 
@@ -119,13 +119,13 @@ Which phases cover which requirements. Updated during roadmap creation.
 | LOCN-01 | Phase 1 | Complete |
 | LOCN-02 | Phase 1 | Complete |
 | LOCN-03 | Phase 1 | Complete |
-| PROF-01 | Phase 2 | Pending |
-| PROF-02 | Phase 2 | Pending |
-| PROF-03 | Phase 2 | Pending |
-| PROF-04 | Phase 2 | Pending |
-| PROF-05 | Phase 2 | Pending |
-| PROF-06 | Phase 2 | Pending |
-| PROF-07 | Phase 2 | Pending |
+| PROF-01 | Phase 2 | Complete |
+| PROF-02 | Phase 2 | Complete |
+| PROF-03 | Phase 2 | Complete |
+| PROF-04 | Phase 2 | Complete |
+| PROF-05 | Phase 2 | Complete |
+| PROF-06 | Phase 2 | Complete |
+| PROF-07 | Phase 2 | Complete |
 | CHKN-01 | Phase 3 | Pending |
 | CHKN-02 | Phase 3 | Pending |
 | CHKN-03 | Phase 3 | Pending |

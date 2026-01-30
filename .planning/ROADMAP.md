@@ -57,9 +57,11 @@ Plans:
 **Plans:** 3 plans
 
 Plans:
-- [ ] 02-01-PLAN.md - Database schema, types, and repositories for users/dogs
-- [ ] 02-02-PLAN.md - Profile creation wizard with WizardScene
-- [ ] 02-03-PLAN.md - Profile viewing, editing, and deletion
+- [x] 02-01-PLAN.md - Database schema, types, and repositories for users/dogs
+- [x] 02-02-PLAN.md - Profile creation wizard with WizardScene
+- [x] 02-03-PLAN.md - Profile viewing, editing, and deletion
+
+**Status:** ✓ Complete (2026-01-30)
 
 **Requirements:**
 - **PROF-01**: User can create a dog profile with name
