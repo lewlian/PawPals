@@ -14,6 +14,13 @@ import {
   handleExtendCallback,
   handleCheckoutCallback,
 } from './handlers/sessionCallbacks.js';
+import {
+  handleRefreshDashboard,
+  handleSortMostDogs,
+  handleSortNearest,
+  handleNearestLocation,
+  handleCancelNearest,
+} from './handlers/dashboardCallbacks.js';
 import { createDogProfileWizard } from './scenes/createDogProfile.js';
 import { editDogProfileWizard } from './scenes/editDogProfile.js';
 import { checkInWizard } from './scenes/checkInWizard.js';
@@ -141,13 +148,31 @@ bot.action(/^confirm_delete_(\d+)$/, async (ctx) => {
 bot.action(/^extend_(\d+)_(\d+)$/, handleExtendCallback);
 bot.action(/^checkout_(\d+)$/, handleCheckoutCallback);
 
-// Handle unexpected location messages (outside wizard)
+// Dashboard callback handlers
+bot.action('refresh_dashboard', handleRefreshDashboard);
+bot.action('sort_most_dogs', handleSortMostDogs);
+bot.action('sort_nearest', handleSortNearest);
+
+// Handle location messages (outside wizard)
+// Used for dashboard "Nearest" sort when user shares location
 bot.on('location', async (ctx) => {
+  // Skip if in a scene (check-in wizard handles its own location)
+  if (ctx.scene.current) {
+    return;
+  }
+
+  // Process as dashboard nearest location sort
+  const userLat = ctx.message.location.latitude;
+  const userLon = ctx.message.location.longitude;
+
+  await handleNearestLocation(ctx, userLat, userLon);
+});
+
+// Handle "Cancel" button for nearest sort location request
+bot.hears('Cancel', async (ctx) => {
   // Only handle if not in a scene
   if (!ctx.scene.current) {
-    await ctx.reply(
-      'To check in at a dog run, please use the /checkin command first.'
-    );
+    await handleCancelNearest(ctx);
   }
 });
 
