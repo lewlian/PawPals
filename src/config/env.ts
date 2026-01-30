@@ -17,6 +17,12 @@ const envSchema = z.object({
 
   // Environment
   NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
+
+  // Production configuration
+  PORT: z.coerce.number().int().positive().default(3000),
+  WEBHOOK_DOMAIN: z.string().optional(),
+  WEBHOOK_SECRET: z.string().min(32).optional(),
+  ADMIN_CHAT_ID: z.string().optional(),
 });
 
 export type Env = z.infer<typeof envSchema>;
