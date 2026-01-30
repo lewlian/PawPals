@@ -13,18 +13,18 @@ See: .planning/PROJECT.md (updated 2025-01-29)
 
 ## Current Position
 
-**Phase:** 5 of 6 (Live Dashboard) - Pending
-**Plan:** 0 of 2 in phase
-**Status:** Phase 4 complete, ready for Phase 5
-**Last activity:** 2026-01-30 - Completed 04-02-PLAN.md
+**Phase:** 5 of 6 (Live Dashboard) - In Progress
+**Plan:** 1 of 2 in phase
+**Status:** Plan 05-01 complete, 05-02 pending
+**Last activity:** 2026-01-30 - Completed 05-01-PLAN.md
 
-**Progress:** [███████████████████░] 95%
+**Progress:** [████████████████████] 96%
 
 ## Performance Metrics
 
-**Plans executed:** 11/13
-**Requirements completed:** 28/35
-**Success criteria met:** 54/54
+**Plans executed:** 12/13
+**Requirements completed:** 32/35
+**Success criteria met:** 58/58
 
 ## Progress
 
@@ -34,7 +34,7 @@ See: .planning/PROJECT.md (updated 2025-01-29)
 | 2 - Dog Profiles | ● Complete | 3/3 | 7/7 | Full CRUD for dog profiles |
 | 3 - Core Check-In/Out | ● Complete | 3/3 | 9/9 | Check-in/checkout fully functional |
 | 4 - Session Automation | ● Complete | 2/2 | 5/5 | Background expiry job operational |
-| 5 - Live Dashboard | ○ Pending | 0/2 | 0/6 | Real-time occupancy |
+| 5 - Live Dashboard | ◐ In Progress | 1/2 | 4/6 | Core dashboard implemented |
 | 6 - Production Deployment | ○ Pending | 0/2 | 0/0 | Webhook setup + monitoring |
 
 ## Accumulated Context
@@ -84,10 +84,13 @@ See: .planning/PROJECT.md (updated 2025-01-29)
 - 2026-01-30: [04-02] 30-second polling interval balances responsiveness with resource efficiency
 - 2026-01-30: [04-02] In-memory reminder tracking accepts re-send on restart near reminder time
 - 2026-01-30: [04-02] Catch-up processing on startup handles missed expiries during downtime
+- 2026-01-30: [05-01] PostgreSQL FILTER clause for efficient conditional counting
+- 2026-01-30: [05-01] Most Dogs as default sort (Nearest requires location from Plan 02)
+- 2026-01-30: [05-01] Single size shows "3 Small dogs" not "3 dogs (3S)"
 
 ### Active TODOs
 
-- Execute Phase 5: Live Dashboard (05-01, 05-02)
+- Execute Phase 5: Live Dashboard (05-02 remaining)
 - Execute Phase 6: Production Deployment (06-01, 06-02)
 
 ### Known Blockers
@@ -96,7 +99,8 @@ None
 
 ## Recent Activity
 
-- 2026-01-30: **Completed 04-02-PLAN.md (Session expiry background job) - Phase 4 complete!**
+- 2026-01-30: **Completed 05-01-PLAN.md (Core dashboard data layer)**
+- 2026-01-30: Completed 04-02-PLAN.md (Session expiry background job) - Phase 4 complete!
 - 2026-01-30: Completed 04-01-PLAN.md (Session expiry queries and callback handlers)
 - 2026-01-30: Completed 03-03-PLAN.md (Check-in/out command integration) - Phase 3 complete!
 - 2026-01-30: Completed 03-02-PLAN.md (Check-in wizard implementation)
@@ -118,19 +122,17 @@ None
 **Current milestone:** v1.0 - Core check-in/dashboard features
 
 **Last session:** 2026-01-30
-**Stopped at:** Completed 04-02-PLAN.md - Session expiry background job
+**Stopped at:** Completed 05-01-PLAN.md - Core dashboard data layer
 **Resume file:** None
 
-**Next action:** Execute 05-01-PLAN.md - Occupancy data layer
+**Next action:** Execute 05-02-PLAN.md - Dashboard sorting and refresh callbacks
 
 **Context for next session:**
-- **Phase 4 complete!** Session automation fully operational
-- Background job polls every 30 seconds for session expiry
-- Reminders sent 5 minutes before expiry with extend/checkout buttons
-- Expiry notifications sent when sessions auto-expire
-- Extended sessions receive new reminders (clearReminderTracking)
-- Jobs start on bot startup, stop on graceful shutdown
-- Ready for: Live dashboard to display real-time occupancy data
+- /live command shows all 11 parks with occupancy data
+- Dashboard sorted by Most Dogs by default
+- Size breakdown in abbreviated format (2S, 1M, 2L)
+- Inline keyboard buttons wired but callbacks not implemented yet
+- Ready for: Location sorting, refresh callbacks, in-place message updates
 
 ---
 *State file for GSD workflow tracking*
