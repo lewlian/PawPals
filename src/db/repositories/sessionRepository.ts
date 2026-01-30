@@ -2,6 +2,20 @@ import { pool } from '../client.js';
 import type { Session } from '../../types/session.js';
 import type { Dog } from '../../types/dog.js';
 
+/**
+ * Session data enriched with user and location details for notifications
+ */
+export interface SessionForNotification {
+  id: number;
+  userId: number;
+  telegramId: number;
+  locationId: number;
+  locationName: string;
+  checkedInAt: Date;
+  expiresAt: Date;
+  dogNames: string[];
+}
+
 interface SessionRow {
   id: number;
   user_id: number;
@@ -151,4 +165,138 @@ export async function getDogsBySessionId(sessionId: number): Promise<Dog[]> {
     createdAt: row.created_at,
     updatedAt: row.updated_at,
   }));
+}
+
+/**
+ * Get active sessions expiring within 5-6 minutes (for reminder notifications)
+ * Window accounts for polling interval variance
+ */
+export async function getSessionsNeedingReminder(): Promise<SessionForNotification[]> {
+  const result = await pool.query<{
+    id: number;
+    user_id: number;
+    telegram_id: string;
+    location_id: number;
+    location_name: string;
+    checked_in_at: Date;
+    expires_at: Date;
+    dog_names: string[];
+  }>(
+    `SELECT
+       s.id,
+       s.user_id,
+       u.telegram_id,
+       s.location_id,
+       l.name as location_name,
+       s.checked_in_at,
+       s.expires_at,
+       ARRAY_AGG(d.name ORDER BY d.name) as dog_names
+     FROM sessions s
+     INNER JOIN users u ON s.user_id = u.id
+     INNER JOIN locations l ON s.location_id = l.id
+     INNER JOIN session_dogs sd ON s.id = sd.session_id
+     INNER JOIN dogs d ON sd.dog_id = d.id
+     WHERE s.status = 'active'
+       AND s.expires_at > NOW()
+       AND s.expires_at <= NOW() + INTERVAL '6 minutes'
+     GROUP BY s.id, s.user_id, u.telegram_id, s.location_id, l.name, s.checked_in_at, s.expires_at
+     ORDER BY s.expires_at ASC`
+  );
+
+  return result.rows.map(row => ({
+    id: row.id,
+    userId: row.user_id,
+    telegramId: parseInt(row.telegram_id, 10),
+    locationId: row.location_id,
+    locationName: row.location_name,
+    checkedInAt: row.checked_in_at,
+    expiresAt: row.expires_at,
+    dogNames: row.dog_names,
+  }));
+}
+
+/**
+ * Get sessions that have expired but not yet processed
+ */
+export async function getExpiredSessions(): Promise<SessionForNotification[]> {
+  const result = await pool.query<{
+    id: number;
+    user_id: number;
+    telegram_id: string;
+    location_id: number;
+    location_name: string;
+    checked_in_at: Date;
+    expires_at: Date;
+    dog_names: string[];
+  }>(
+    `SELECT
+       s.id,
+       s.user_id,
+       u.telegram_id,
+       s.location_id,
+       l.name as location_name,
+       s.checked_in_at,
+       s.expires_at,
+       ARRAY_AGG(d.name ORDER BY d.name) as dog_names
+     FROM sessions s
+     INNER JOIN users u ON s.user_id = u.id
+     INNER JOIN locations l ON s.location_id = l.id
+     INNER JOIN session_dogs sd ON s.id = sd.session_id
+     INNER JOIN dogs d ON sd.dog_id = d.id
+     WHERE s.status = 'active'
+       AND s.expires_at <= NOW()
+     GROUP BY s.id, s.user_id, u.telegram_id, s.location_id, l.name, s.checked_in_at, s.expires_at
+     ORDER BY s.expires_at ASC`
+  );
+
+  return result.rows.map(row => ({
+    id: row.id,
+    userId: row.user_id,
+    telegramId: parseInt(row.telegram_id, 10),
+    locationId: row.location_id,
+    locationName: row.location_name,
+    checkedInAt: row.checked_in_at,
+    expiresAt: row.expires_at,
+    dogNames: row.dog_names,
+  }));
+}
+
+/**
+ * Mark sessions as expired (batch operation)
+ */
+export async function expireSessions(sessionIds: number[]): Promise<void> {
+  if (sessionIds.length === 0) {
+    return;
+  }
+
+  await pool.query(
+    `UPDATE sessions
+     SET status = 'expired',
+         updated_at = NOW()
+     WHERE id = ANY($1)`,
+    [sessionIds]
+  );
+}
+
+/**
+ * Extend a session by adding minutes to expires_at
+ */
+export async function extendSession(
+  sessionId: number,
+  additionalMinutes: number
+): Promise<Session | null> {
+  const result = await pool.query<SessionRow>(
+    `UPDATE sessions
+     SET expires_at = expires_at + ($2 || ' minutes')::INTERVAL,
+         updated_at = NOW()
+     WHERE id = $1 AND status = 'active'
+     RETURNING *`,
+    [sessionId, additionalMinutes]
+  );
+
+  if (result.rows.length === 0) {
+    return null;
+  }
+
+  return mapRowToSession(result.rows[0]!);
 }
