@@ -12,6 +12,7 @@ import { checkoutHandler } from './handlers/checkout.js';
 import { liveHandler } from './handlers/live.js';
 import { createDogProfileWizard } from './scenes/createDogProfile.js';
 import { editDogProfileWizard } from './scenes/editDogProfile.js';
+import { checkInWizard } from './scenes/checkInWizard.js';
 import { findDogById, deleteDog } from '../db/repositories/dogRepository.js';
 
 const env = validateEnv();
@@ -33,6 +34,7 @@ bot.use(session());
 const stage = new Scenes.Stage<BotContext>([
   createDogProfileWizard,
   editDogProfileWizard,
+  checkInWizard,
 ]);
 bot.use(stage.middleware());
 
@@ -127,6 +129,16 @@ bot.action(/^confirm_delete_(\d+)$/, async (ctx) => {
   } else {
     await ctx.editMessageText(
       'Could not delete dog. Please try again.'
+    );
+  }
+});
+
+// Handle unexpected location messages (outside wizard)
+bot.on('location', async (ctx) => {
+  // Only handle if not in a scene
+  if (!ctx.scene.current) {
+    await ctx.reply(
+      'To check in at a dog run, please use the /checkin command first.'
     );
   }
 });
