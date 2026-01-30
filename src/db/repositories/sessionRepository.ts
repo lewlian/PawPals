@@ -1,6 +1,7 @@
 import { pool } from '../client.js';
 import type { Session } from '../../types/session.js';
 import type { Dog } from '../../types/dog.js';
+import type { OccupancyData } from '../../types/dashboard.js';
 
 /**
  * Session data enriched with user and location details for notifications
@@ -299,4 +300,49 @@ export async function extendSession(
   }
 
   return mapRowToSession(result.rows[0]!);
+}
+
+/**
+ * Get occupancy data for all locations with size breakdowns
+ * Uses LEFT JOIN to ensure parks with 0 dogs still appear
+ */
+export async function getOccupancyByLocation(): Promise<OccupancyData[]> {
+  const result = await pool.query<{
+    location_id: number;
+    location_name: string;
+    latitude: string;
+    longitude: string;
+    total_dogs: string;
+    small_count: string;
+    medium_count: string;
+    large_count: string;
+  }>(`
+    SELECT
+      l.id as location_id,
+      l.name as location_name,
+      l.latitude,
+      l.longitude,
+      COALESCE(COUNT(sd.dog_id), 0) as total_dogs,
+      COALESCE(COUNT(sd.dog_id) FILTER (WHERE d.size = 'Small'), 0) as small_count,
+      COALESCE(COUNT(sd.dog_id) FILTER (WHERE d.size = 'Medium'), 0) as medium_count,
+      COALESCE(COUNT(sd.dog_id) FILTER (WHERE d.size = 'Large'), 0) as large_count
+    FROM locations l
+    LEFT JOIN sessions s ON s.location_id = l.id AND s.status = 'active'
+    LEFT JOIN session_dogs sd ON sd.session_id = s.id
+    LEFT JOIN dogs d ON d.id = sd.dog_id
+    GROUP BY l.id, l.name, l.latitude, l.longitude
+    ORDER BY l.name
+  `);
+
+  // pg returns counts as strings, parse to numbers
+  return result.rows.map(row => ({
+    locationId: row.location_id,
+    locationName: row.location_name,
+    latitude: parseFloat(row.latitude),
+    longitude: parseFloat(row.longitude),
+    totalDogs: parseInt(row.total_dogs, 10),
+    small: parseInt(row.small_count, 10),
+    medium: parseInt(row.medium_count, 10),
+    large: parseInt(row.large_count, 10),
+  }));
 }
