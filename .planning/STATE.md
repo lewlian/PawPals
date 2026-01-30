@@ -13,18 +13,18 @@ See: .planning/PROJECT.md (updated 2025-01-29)
 
 ## Current Position
 
-**Phase:** 5 of 6 (Live Dashboard) - Complete
-**Plan:** 2 of 2 in phase - Complete
-**Status:** Phase 5 complete, ready for Phase 6
-**Last activity:** 2026-01-30 - Completed 05-02-PLAN.md
+**Phase:** 6 of 6 (Production Deployment) - In Progress
+**Plan:** 1 of 2 in phase - Complete
+**Status:** Plan 06-01 complete, ready for 06-02
+**Last activity:** 2026-01-30 - Completed 06-01-PLAN.md
 
-**Progress:** [████████████████████] 100% (Phase 5 complete)
+**Progress:** [████████████████████░] 93% (14/15 plans complete)
 
 ## Performance Metrics
 
-**Plans executed:** 13/13 (Phase 1-5)
+**Plans executed:** 14/15 (Phase 1-5 complete, Phase 6 in progress)
 **Requirements completed:** 35/35
-**Success criteria met:** 64/64
+**Success criteria met:** 67/67
 
 ## Progress
 
@@ -35,7 +35,7 @@ See: .planning/PROJECT.md (updated 2025-01-29)
 | 3 - Core Check-In/Out | ● Complete | 3/3 | 9/9 | Check-in/checkout fully functional |
 | 4 - Session Automation | ● Complete | 2/2 | 5/5 | Background expiry job operational |
 | 5 - Live Dashboard | ● Complete | 2/2 | 6/6 | Dashboard with sorting + refresh |
-| 6 - Production Deployment | ○ Pending | 0/2 | 0/0 | Webhook setup + monitoring |
+| 6 - Production Deployment | ◐ In Progress | 1/2 | 0/0 | Webhook setup complete |
 
 ## Accumulated Context
 
@@ -90,10 +90,15 @@ See: .planning/PROJECT.md (updated 2025-01-29)
 - 2026-01-30: [05-02] Reply keyboard used for location request (Telegram inline button limitation)
 - 2026-01-30: [05-02] Distance rounded to 1 decimal place for user-friendly display
 - 2026-01-30: [05-02] Location handler outside wizard processes as dashboard nearest sort
+- 2026-01-30: [06-01] PORT uses z.coerce for Railway's string PORT env var
+- 2026-01-30: [06-01] WEBHOOK_SECRET minimum 32 chars for security (64-char hex from crypto.randomBytes)
+- 2026-01-30: [06-01] ADMIN_CHAT_ID as string type for Telegram's large user IDs
+- 2026-01-30: [06-01] Error stack truncated to 500 chars for Telegram message limits
+- 2026-01-30: [06-01] Deployment notification failure doesn't prevent bot startup
 
 ### Active TODOs
 
-- Execute Phase 6: Production Deployment (06-01, 06-02)
+- Execute Plan 06-02: Railway deployment
 
 ### Known Blockers
 
@@ -101,7 +106,8 @@ None
 
 ## Recent Activity
 
-- 2026-01-30: **Completed 05-02-PLAN.md (Dashboard interactivity)** - Phase 5 complete!
+- 2026-01-30: **Completed 06-01-PLAN.md (Production environment & admin notifications)**
+- 2026-01-30: Completed 05-02-PLAN.md (Dashboard interactivity) - Phase 5 complete!
 - 2026-01-30: Completed 05-01-PLAN.md (Core dashboard data layer)
 - 2026-01-30: Completed 04-02-PLAN.md (Session expiry background job) - Phase 4 complete!
 - 2026-01-30: Completed 04-01-PLAN.md (Session expiry queries and callback handlers)
@@ -122,19 +128,19 @@ None
 
 **What we're building:** Telegram bot for Singapore dog run real-time occupancy tracking
 
-**Current milestone:** v1.0 - Core check-in/dashboard features (COMPLETE)
+**Current milestone:** v1.0 - Core check-in/dashboard features (COMPLETE, deploying to production)
 
 **Last session:** 2026-01-30
-**Stopped at:** Completed 05-02-PLAN.md - Dashboard interactivity (Phase 5 complete)
+**Stopped at:** Completed 06-01-PLAN.md - Production environment & admin notifications
 **Resume file:** None
 
-**Next action:** Execute Phase 6 - Production Deployment
+**Next action:** Execute Plan 06-02 - Railway deployment
 
 **Context for next session:**
 - All v1 features implemented and working
-- Dashboard with refresh, sort by most dogs, sort by nearest (with distance display)
-- Location sharing via reply keyboard (Telegram API limitation handled)
-- Ready for: Webhook setup, production monitoring, deployment
+- Codebase prepared for production with webhook/polling mode switching
+- Admin notifications configured for errors and deployment
+- Ready for: Railway project setup, environment configuration, deployment
 
 ---
 *State file for GSD workflow tracking*
