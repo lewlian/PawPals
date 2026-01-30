@@ -5,7 +5,8 @@ const envSchema = z.object({
   // Bot configuration
   BOT_TOKEN: z.string().min(1, 'BOT_TOKEN is required'),
 
-  // PostgreSQL configuration
+  // PostgreSQL configuration (DATABASE_URL takes precedence if set)
+  DATABASE_URL: z.string().optional(),
   DB_HOST: z.string().default('localhost'),
   DB_PORT: z.coerce.number().int().positive().default(5432),
   DB_NAME: z.string().default('pawpals'),
