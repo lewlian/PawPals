@@ -124,10 +124,10 @@ Plans:
 **Plans:** 2 plans
 
 Plans:
-- [ ] 04-01-PLAN.md - Expiry queries and callback handlers for extend/checkout buttons
-- [ ] 04-02-PLAN.md - Background job for auto-expiry with proactive notifications
+- [x] 04-01-PLAN.md - Expiry queries and callback handlers for extend/checkout buttons
+- [x] 04-02-PLAN.md - Background job for auto-expiry with proactive notifications
 
-**Status:** Planned (2026-01-30)
+**Status:** Complete (2026-01-30)
 
 **Requirements:**
 - **SESS-01**: Sessions auto-expire after selected duration

@@ -29,13 +29,13 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Session Management
 
-- [ ] **SESS-01**: Sessions auto-expire after selected duration
-- [ ] **SESS-02**: User receives reminder 5 minutes before session expires
-- [ ] **SESS-03**: Expiry reminder includes "Extend 15min" and "Checkout" buttons
-- [ ] **SESS-04**: User can extend session by 15 minutes from reminder
+- [x] **SESS-01**: Sessions auto-expire after selected duration
+- [x] **SESS-02**: User receives reminder 5 minutes before session expires
+- [x] **SESS-03**: Expiry reminder includes "Extend 15min" and "Checkout" buttons
+- [x] **SESS-04**: User can extend session by 15 minutes from reminder
 - [x] **SESS-05**: User can manually check out anytime via /checkout command
 - [x] **SESS-06**: Session ends immediately on manual checkout
-- [ ] **SESS-07**: Occupancy count decreases when session ends (expiry or checkout)
+- [x] **SESS-07**: Occupancy count decreases when session ends (expiry or checkout)
 
 ### Live Dashboard
 
@@ -135,11 +135,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 | CHKN-07 | Phase 3 | Complete |
 | SESS-05 | Phase 3 | Complete |
 | SESS-06 | Phase 3 | Complete |
-| SESS-01 | Phase 4 | Pending |
-| SESS-02 | Phase 4 | Pending |
-| SESS-03 | Phase 4 | Pending |
-| SESS-04 | Phase 4 | Pending |
-| SESS-07 | Phase 4 | Pending |
+| SESS-01 | Phase 4 | Complete |
+| SESS-02 | Phase 4 | Complete |
+| SESS-03 | Phase 4 | Complete |
+| SESS-04 | Phase 4 | Complete |
+| SESS-07 | Phase 4 | Complete |
 | DASH-01 | Phase 5 | Pending |
 | DASH-02 | Phase 5 | Pending |
 | DASH-03 | Phase 5 | Pending |
