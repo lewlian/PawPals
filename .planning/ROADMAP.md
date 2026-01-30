@@ -61,7 +61,7 @@ Plans:
 - [x] 02-02-PLAN.md - Profile creation wizard with WizardScene
 - [x] 02-03-PLAN.md - Profile viewing, editing, and deletion
 
-**Status:** ✓ Complete (2026-01-30)
+**Status:** Complete (2026-01-30)
 
 **Requirements:**
 - **PROF-01**: User can create a dog profile with name
@@ -93,7 +93,7 @@ Plans:
 - [x] 03-02-PLAN.md - Check-in wizard (location, geofence, dog selection, duration)
 - [x] 03-03-PLAN.md - Checkout handler and bot integration
 
-**Status:** ✓ Complete (2026-01-30)
+**Status:** Complete (2026-01-30)
 
 **Requirements:**
 - **CHKN-01**: User can initiate check-in via /checkin command
@@ -120,6 +120,14 @@ Plans:
 ### Phase 4: Session Automation
 
 **Goal:** Sessions expire automatically with timely user notifications and extension options
+
+**Plans:** 2 plans
+
+Plans:
+- [ ] 04-01-PLAN.md - Expiry queries and callback handlers for extend/checkout buttons
+- [ ] 04-02-PLAN.md - Background job for auto-expiry with proactive notifications
+
+**Status:** Planned (2026-01-30)
 
 **Requirements:**
 - **SESS-01**: Sessions auto-expire after selected duration
