@@ -1,6 +1,6 @@
 # Project State: PawPals SG
 
-**Current Phase:** 05-live-dashboard
+**Current Phase:** 06-production-deployment
 **Last Updated:** 2026-01-30
 
 ## Project Reference
@@ -9,22 +9,22 @@ See: .planning/PROJECT.md (updated 2025-01-29)
 
 **Core value:** Dog owners can see exactly how many dogs are at a park right now, so they never arrive to find it empty or overcrowded with incompatible breeds.
 
-**Current focus:** Phase 5 - Live Dashboard (real-time occupancy display)
+**Current focus:** Phase 6 - Production Deployment (webhook setup, monitoring)
 
 ## Current Position
 
-**Phase:** 5 of 6 (Live Dashboard) - In Progress
-**Plan:** 1 of 2 in phase
-**Status:** Plan 05-01 complete, 05-02 pending
-**Last activity:** 2026-01-30 - Completed 05-01-PLAN.md
+**Phase:** 5 of 6 (Live Dashboard) - Complete
+**Plan:** 2 of 2 in phase - Complete
+**Status:** Phase 5 complete, ready for Phase 6
+**Last activity:** 2026-01-30 - Completed 05-02-PLAN.md
 
-**Progress:** [████████████████████] 96%
+**Progress:** [████████████████████] 100% (Phase 5 complete)
 
 ## Performance Metrics
 
-**Plans executed:** 12/13
-**Requirements completed:** 32/35
-**Success criteria met:** 58/58
+**Plans executed:** 13/13 (Phase 1-5)
+**Requirements completed:** 35/35
+**Success criteria met:** 64/64
 
 ## Progress
 
@@ -34,7 +34,7 @@ See: .planning/PROJECT.md (updated 2025-01-29)
 | 2 - Dog Profiles | ● Complete | 3/3 | 7/7 | Full CRUD for dog profiles |
 | 3 - Core Check-In/Out | ● Complete | 3/3 | 9/9 | Check-in/checkout fully functional |
 | 4 - Session Automation | ● Complete | 2/2 | 5/5 | Background expiry job operational |
-| 5 - Live Dashboard | ◐ In Progress | 1/2 | 4/6 | Core dashboard implemented |
+| 5 - Live Dashboard | ● Complete | 2/2 | 6/6 | Dashboard with sorting + refresh |
 | 6 - Production Deployment | ○ Pending | 0/2 | 0/0 | Webhook setup + monitoring |
 
 ## Accumulated Context
@@ -87,10 +87,12 @@ See: .planning/PROJECT.md (updated 2025-01-29)
 - 2026-01-30: [05-01] PostgreSQL FILTER clause for efficient conditional counting
 - 2026-01-30: [05-01] Most Dogs as default sort (Nearest requires location from Plan 02)
 - 2026-01-30: [05-01] Single size shows "3 Small dogs" not "3 dogs (3S)"
+- 2026-01-30: [05-02] Reply keyboard used for location request (Telegram inline button limitation)
+- 2026-01-30: [05-02] Distance rounded to 1 decimal place for user-friendly display
+- 2026-01-30: [05-02] Location handler outside wizard processes as dashboard nearest sort
 
 ### Active TODOs
 
-- Execute Phase 5: Live Dashboard (05-02 remaining)
 - Execute Phase 6: Production Deployment (06-01, 06-02)
 
 ### Known Blockers
@@ -99,7 +101,8 @@ None
 
 ## Recent Activity
 
-- 2026-01-30: **Completed 05-01-PLAN.md (Core dashboard data layer)**
+- 2026-01-30: **Completed 05-02-PLAN.md (Dashboard interactivity)** - Phase 5 complete!
+- 2026-01-30: Completed 05-01-PLAN.md (Core dashboard data layer)
 - 2026-01-30: Completed 04-02-PLAN.md (Session expiry background job) - Phase 4 complete!
 - 2026-01-30: Completed 04-01-PLAN.md (Session expiry queries and callback handlers)
 - 2026-01-30: Completed 03-03-PLAN.md (Check-in/out command integration) - Phase 3 complete!
@@ -119,20 +122,19 @@ None
 
 **What we're building:** Telegram bot for Singapore dog run real-time occupancy tracking
 
-**Current milestone:** v1.0 - Core check-in/dashboard features
+**Current milestone:** v1.0 - Core check-in/dashboard features (COMPLETE)
 
 **Last session:** 2026-01-30
-**Stopped at:** Completed 05-01-PLAN.md - Core dashboard data layer
+**Stopped at:** Completed 05-02-PLAN.md - Dashboard interactivity (Phase 5 complete)
 **Resume file:** None
 
-**Next action:** Execute 05-02-PLAN.md - Dashboard sorting and refresh callbacks
+**Next action:** Execute Phase 6 - Production Deployment
 
 **Context for next session:**
-- /live command shows all 11 parks with occupancy data
-- Dashboard sorted by Most Dogs by default
-- Size breakdown in abbreviated format (2S, 1M, 2L)
-- Inline keyboard buttons wired but callbacks not implemented yet
-- Ready for: Location sorting, refresh callbacks, in-place message updates
+- All v1 features implemented and working
+- Dashboard with refresh, sort by most dogs, sort by nearest (with distance display)
+- Location sharing via reply keyboard (Telegram API limitation handled)
+- Ready for: Webhook setup, production monitoring, deployment
 
 ---
 *State file for GSD workflow tracking*
