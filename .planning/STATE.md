@@ -13,18 +13,18 @@ See: .planning/PROJECT.md (updated 2025-01-29)
 
 ## Current Position
 
-**Phase:** 3 of 6 (Core Check-In/Out) - IN PROGRESS
-**Plan:** 03-02 completed (2 of 3 in phase)
-**Status:** Phase 3 in progress
-**Last activity:** 2026-01-30 - Completed 03-02-PLAN.md
+**Phase:** 3 of 6 (Core Check-In/Out) - COMPLETE
+**Plan:** 03-03 completed (3 of 3 in phase)
+**Status:** Phase 3 complete
+**Last activity:** 2026-01-30 - Completed 03-03-PLAN.md
 
-**Progress:** [███████████████░░░░░] 89%
+**Progress:** [████████████████████] 100%
 
 ## Performance Metrics
 
-**Plans executed:** 8/9
-**Requirements completed:** 20/35
-**Success criteria met:** 37/35
+**Plans executed:** 9/9
+**Requirements completed:** 23/35
+**Success criteria met:** 43/43
 
 ## Progress
 
@@ -32,7 +32,7 @@ See: .planning/PROJECT.md (updated 2025-01-29)
 |-------|--------|-------|--------------|-------|
 | 1 - Foundation & Setup | ● Complete | 3/3 | 8/8 | Bot infrastructure + locations |
 | 2 - Dog Profiles | ● Complete | 3/3 | 7/7 | Full CRUD for dog profiles |
-| 3 - Core Check-In/Out | ◐ In Progress | 2/3 | 9/9 | Check-in wizard complete |
+| 3 - Core Check-In/Out | ● Complete | 3/3 | 9/9 | Check-in/checkout fully functional |
 | 4 - Session Automation | ○ Pending | 0/2 | 0/5 | Auto-expiry + reminders |
 | 5 - Live Dashboard | ○ Pending | 0/2 | 0/6 | Real-time occupancy |
 | 6 - Production Deployment | ○ Pending | 0/2 | 0/0 | Webhook setup + monitoring |
@@ -75,10 +75,13 @@ See: .planning/PROJECT.md (updated 2025-01-29)
 - 2026-01-30: [03-02] "All Dogs" button shown only when user has multiple dogs
 - 2026-01-30: [03-02] Exit wizard immediately when geofence validation fails
 - 2026-01-30: [03-02] Show dog breed in selection keyboard for clarity
+- 2026-01-30: [03-03] Scene ID 'check-in-wizard' used to match wizard registration
+- 2026-01-30: [03-03] Location messages outside wizard show guidance to use /checkin
+- 2026-01-30: [03-03] Global location handler checks ctx.scene.current to avoid interfering with wizard
 
 ### Active TODOs
 
-- Continue Phase 3: Check-in handler integration (03-03)
+- Start Phase 4: Session Automation (auto-expiry and reminder notifications)
 
 ### Known Blockers
 
@@ -86,7 +89,8 @@ None
 
 ## Recent Activity
 
-- 2026-01-30: **Completed 03-02-PLAN.md (Check-in wizard implementation)**
+- 2026-01-30: **Completed 03-03-PLAN.md (Check-in/out command integration) - Phase 3 complete!**
+- 2026-01-30: Completed 03-02-PLAN.md (Check-in wizard implementation)
 - 2026-01-30: Completed 03-01-PLAN.md (Session data layer)
 - 2026-01-30: Completed 02-03-PLAN.md (Profile command integration) - Phase 2 complete!
 - 2026-01-30: Completed 02-02-PLAN.md (Profile wizard implementation)
@@ -105,19 +109,20 @@ None
 **Current milestone:** v1.0 - Core check-in/dashboard features
 
 **Last session:** 2026-01-30
-**Stopped at:** Completed 03-02-PLAN.md - Check-in wizard implementation
+**Stopped at:** Completed 03-03-PLAN.md - Check-in/out command integration
 **Resume file:** None
 
-**Next action:** Continue Phase 3 - Check-in handler integration (03-03-PLAN.md)
+**Next action:** Start Phase 4 - Session Automation
 
 **Context for next session:**
-- **Phase 3 nearly complete!** Check-in wizard fully functional
-- checkInWizard scene implements 5-step flow: location → geofence → dogs → duration → confirmation
-- Supports GPS location validation with 200m geofence radius
-- Multi-dog selection with "All Dogs" shortcut
-- Three duration options (15/30/60 minutes) with 30m as default
-- Checkout handler already implemented and functional
-- Ready for: Register scene with bot stage, create /checkin command handler
+- **Phase 3 complete!** Full check-in/checkout functionality operational
+- /checkin command enters wizard with location validation (200m geofence)
+- /checkout command ends sessions with duration calculation and confirmation
+- Multi-dog session support via session_dogs junction table
+- Session status field supports 'active', 'expired', 'completed' states
+- Session expiry timestamps set during check-in
+- Global location handler guides users to use /checkin command
+- Ready for: Auto-expiry background job, reminder notifications, session cleanup
 
 ---
 *State file for GSD workflow tracking*
