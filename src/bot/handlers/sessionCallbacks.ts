@@ -6,6 +6,7 @@ import {
   getDogsBySessionId,
 } from '../../db/repositories/sessionRepository.js';
 import { getLocationById } from '../../db/locations.js';
+import { clearReminderTracking } from '../../jobs/sessionExpiry.js';
 
 // Context type for regex action callbacks (includes match array from Telegraf)
 type ActionContext = BotContext & { match: RegExpExecArray };
@@ -47,6 +48,9 @@ export async function handleExtendCallback(ctx: ActionContext): Promise<void> {
     );
     return;
   }
+
+  // Clear reminder tracking so extended session can get new reminder
+  clearReminderTracking(sessionId);
 
   // Format new expiry time in Singapore timezone
   const newExpiryTime = extended.expiresAt.toLocaleTimeString('en-SG', {

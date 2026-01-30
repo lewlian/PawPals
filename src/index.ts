@@ -1,5 +1,6 @@
 import { bot } from './bot/index.js';
 import { closePool, checkConnection } from './db/client.js';
+import { startAllJobs, stopAllJobs } from './jobs/index.js';
 
 async function main(): Promise<void> {
   console.log('Starting PawPals SG bot...');
@@ -12,6 +13,9 @@ async function main(): Promise<void> {
   }
   console.log('Database connected');
 
+  // Start background jobs
+  startAllJobs();
+
   // Launch bot in polling mode (development)
   await bot.launch();
   console.log('Bot is running!');
@@ -23,6 +27,9 @@ async function shutdown(signal: string): Promise<void> {
   console.log(`\n${signal} received. Shutting down gracefully...`);
 
   try {
+    // Stop background jobs first
+    stopAllJobs();
+
     bot.stop(signal);
     console.log('Bot stopped');
 
