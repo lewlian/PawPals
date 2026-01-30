@@ -181,6 +181,12 @@ Plans:
 
 **Goal:** Bot is running reliably in production with webhook-based updates and monitoring
 
+**Plans:** 2 plans
+
+Plans:
+- [ ] 06-01-PLAN.md - Webhook configuration and admin notifications
+- [ ] 06-02-PLAN.md - Railway deployment and verification
+
 **Requirements:**
 - (No new feature requirements - deployment phase)
 
