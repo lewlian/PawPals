@@ -1,3 +1,4 @@
+import express from 'express';
 import { bot } from './bot/index.js';
 import { closePool, checkConnection } from './db/client.js';
 import { startAllJobs, stopAllJobs } from './jobs/index.js';
@@ -21,26 +22,41 @@ async function main(): Promise<void> {
 
   // Launch bot based on environment
   if (env.NODE_ENV === 'production') {
-    // Production: webhook mode
+    // Production: webhook mode with Express
     if (!env.WEBHOOK_DOMAIN) {
       console.error('WEBHOOK_DOMAIN is required in production');
       process.exit(1);
     }
 
-    await bot.launch({
-      webhook: {
-        domain: env.WEBHOOK_DOMAIN,
-        port: env.PORT,
-        host: '0.0.0.0',
-        path: '/webhook',
-        secretToken: env.WEBHOOK_SECRET,
-      },
+    const app = express();
+
+    // Health check endpoint
+    app.get('/', (_req, res) => {
+      res.send('PawPals SG Bot is running');
     });
 
-    console.log('Bot running in webhook mode');
-    console.log(`Webhook: https://${env.WEBHOOK_DOMAIN}/webhook`);
-    console.log(`Port: ${env.PORT}`);
-    console.log(`Secret token: ${env.WEBHOOK_SECRET ? 'configured' : 'not set'}`);
+    // Webhook endpoint - use Telegraf's webhook callback
+    const webhookPath = '/webhook';
+    app.use(webhookPath, express.json(), (req, res) => {
+      bot.handleUpdate(req.body, res);
+    });
+
+    // Set webhook URL with Telegram
+    const webhookUrl = `https://${env.WEBHOOK_DOMAIN}${webhookPath}`;
+    await bot.telegram.setWebhook(webhookUrl, {
+      secret_token: env.WEBHOOK_SECRET,
+    });
+
+    // Start Express server
+    const server = app.listen(env.PORT, '0.0.0.0', () => {
+      console.log('Bot running in webhook mode');
+      console.log(`Webhook: ${webhookUrl}`);
+      console.log(`Port: ${env.PORT}`);
+      console.log(`Secret token: ${env.WEBHOOK_SECRET ? 'configured' : 'not set'}`);
+    });
+
+    // Store server for graceful shutdown
+    (global as unknown as { server: typeof server }).server = server;
 
     // Send deployment notification to admin
     if (env.ADMIN_CHAT_ID) {
@@ -71,7 +87,13 @@ async function shutdown(signal: string): Promise<void> {
     // Stop background jobs first
     stopAllJobs();
 
-    bot.stop(signal);
+    // Close Express server if in production
+    const server = (global as unknown as { server?: { close: (cb: () => void) => void } }).server;
+    if (server) {
+      server.close(() => console.log('HTTP server closed'));
+    } else {
+      bot.stop(signal);
+    }
     console.log('Bot stopped');
 
     await closePool();
