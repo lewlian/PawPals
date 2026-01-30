@@ -1,5 +1,5 @@
 import { pool, closePool } from './client.js';
-import { readFileSync } from 'fs';
+import { readFileSync, readdirSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -9,13 +9,20 @@ async function migrate(): Promise<void> {
   console.log('Running database migrations...');
 
   try {
-    // Read and execute migration file
-    const migrationPath = join(__dirname, 'migrations', '0001-initial-schema.sql');
-    const migrationSQL = readFileSync(migrationPath, 'utf-8');
+    const migrationsDir = join(__dirname, 'migrations');
+    const migrationFiles = readdirSync(migrationsDir)
+      .filter((file) => file.endsWith('.sql'))
+      .sort();
 
-    await pool.query(migrationSQL);
-    console.log('Migration 0001-initial-schema.sql applied successfully');
+    for (const file of migrationFiles) {
+      const migrationPath = join(migrationsDir, file);
+      const migrationSQL = readFileSync(migrationPath, 'utf-8');
 
+      await pool.query(migrationSQL);
+      console.log(`Migration ${file} applied successfully`);
+    }
+
+    console.log('All migrations completed successfully');
   } catch (error) {
     console.error('Migration failed:', error);
     process.exit(1);
