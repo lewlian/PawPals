@@ -153,8 +153,10 @@ Plans:
 **Plans:** 2 plans
 
 Plans:
-- [ ] 05-01-PLAN.md - Core dashboard with occupancy query and display formatting
-- [ ] 05-02-PLAN.md - Dashboard interactivity (sort, refresh, nearest location)
+- [x] 05-01-PLAN.md - Core dashboard with occupancy query and display formatting
+- [x] 05-02-PLAN.md - Dashboard interactivity (sort, refresh, nearest location)
+
+**Status:** Complete (2026-01-30)
 
 **Requirements:**
 - **DASH-01**: User can view live occupancy via /live command

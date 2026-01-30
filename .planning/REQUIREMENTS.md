@@ -39,12 +39,12 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Live Dashboard
 
-- [ ] **DASH-01**: User can view live occupancy via /live command
-- [ ] **DASH-02**: Dashboard shows all 11 dog runs with current dog count
-- [ ] **DASH-03**: Each park shows size breakdown (e.g., "3 Small, 2 Med, 1 Large")
-- [ ] **DASH-04**: User can sort parks by "Most Dogs" (default)
-- [ ] **DASH-05**: User can sort parks by "Nearest to Me" (requires location)
-- [ ] **DASH-06**: Dashboard updates in real-time (reflects current sessions)
+- [x] **DASH-01**: User can view live occupancy via /live command
+- [x] **DASH-02**: Dashboard shows all 11 dog runs with current dog count
+- [x] **DASH-03**: Each park shows size breakdown (e.g., "3 Small, 2 Med, 1 Large")
+- [x] **DASH-04**: User can sort parks by "Most Dogs" (default)
+- [x] **DASH-05**: User can sort parks by "Nearest to Me" (requires location)
+- [x] **DASH-06**: Dashboard updates in real-time (reflects current sessions)
 
 ### Locations
 
@@ -140,12 +140,12 @@ Which phases cover which requirements. Updated during roadmap creation.
 | SESS-03 | Phase 4 | Complete |
 | SESS-04 | Phase 4 | Complete |
 | SESS-07 | Phase 4 | Complete |
-| DASH-01 | Phase 5 | Pending |
-| DASH-02 | Phase 5 | Pending |
-| DASH-03 | Phase 5 | Pending |
-| DASH-04 | Phase 5 | Pending |
-| DASH-05 | Phase 5 | Pending |
-| DASH-06 | Phase 5 | Pending |
+| DASH-01 | Phase 5 | Complete |
+| DASH-02 | Phase 5 | Complete |
+| DASH-03 | Phase 5 | Complete |
+| DASH-04 | Phase 5 | Complete |
+| DASH-05 | Phase 5 | Complete |
+| DASH-06 | Phase 5 | Complete |
 
 **Coverage:**
 - v1 requirements: 35 total
