@@ -31,11 +31,33 @@ const env = validateEnv();
 export const bot = new Telegraf<BotContext>(env.BOT_TOKEN);
 
 // Global error handler - prevents crashes from unhandled errors
-bot.catch((err, ctx) => {
+bot.catch(async (err, ctx) => {
   console.error(`Error for ${ctx.updateType}:`, err);
-  ctx.reply('Sorry, something went wrong. Please try again.').catch(() => {
+
+  // Try to notify user
+  try {
+    await ctx.reply('Sorry, something went wrong. Please try again.');
+  } catch {
     // Silent fail if we can't send error message
-  });
+  }
+
+  // Send error details to admin (production only)
+  if (env.NODE_ENV === 'production' && env.ADMIN_CHAT_ID) {
+    try {
+      const errorMessage =
+        'Bot Error\n\n' +
+        `Type: ${ctx.updateType}\n` +
+        `Error: ${err instanceof Error ? err.message : String(err)}\n` +
+        `User: ${ctx.from?.id || 'unknown'}\n` +
+        `Time: ${new Date().toISOString()}\n\n` +
+        `Stack: ${err instanceof Error ? err.stack?.substring(0, 500) : 'N/A'}`;
+
+      await bot.telegram.sendMessage(env.ADMIN_CHAT_ID, errorMessage);
+    } catch (notifyErr) {
+      // CRITICAL: Never throw from error handler - would cause infinite loop
+      console.error('Failed to send admin notification:', notifyErr);
+    }
+  }
 });
 
 // Session middleware MUST come before stage
