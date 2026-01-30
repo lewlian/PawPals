@@ -19,13 +19,13 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Check-In
 
-- [ ] **CHKN-01**: User can initiate check-in via /checkin command
-- [ ] **CHKN-02**: Bot requests one-time location share from user
-- [ ] **CHKN-03**: System validates user is within 200m of a dog run (Haversine formula)
-- [ ] **CHKN-04**: User receives clear error if too far from any dog run
-- [ ] **CHKN-05**: User can select which dog(s) to check in (if multiple)
-- [ ] **CHKN-06**: User can select stay duration (15m, 30m, 60m) with 30m default
-- [ ] **CHKN-07**: User receives confirmation with check-in details
+- [x] **CHKN-01**: User can initiate check-in via /checkin command
+- [x] **CHKN-02**: Bot requests one-time location share from user
+- [x] **CHKN-03**: System validates user is within 200m of a dog run (Haversine formula)
+- [x] **CHKN-04**: User receives clear error if too far from any dog run
+- [x] **CHKN-05**: User can select which dog(s) to check in (if multiple)
+- [x] **CHKN-06**: User can select stay duration (15m, 30m, 60m) with 30m default
+- [x] **CHKN-07**: User receives confirmation with check-in details
 
 ### Session Management
 
@@ -33,8 +33,8 @@ Requirements for initial release. Each maps to roadmap phases.
 - [ ] **SESS-02**: User receives reminder 5 minutes before session expires
 - [ ] **SESS-03**: Expiry reminder includes "Extend 15min" and "Checkout" buttons
 - [ ] **SESS-04**: User can extend session by 15 minutes from reminder
-- [ ] **SESS-05**: User can manually check out anytime via /checkout command
-- [ ] **SESS-06**: Session ends immediately on manual checkout
+- [x] **SESS-05**: User can manually check out anytime via /checkout command
+- [x] **SESS-06**: Session ends immediately on manual checkout
 - [ ] **SESS-07**: Occupancy count decreases when session ends (expiry or checkout)
 
 ### Live Dashboard
@@ -126,15 +126,15 @@ Which phases cover which requirements. Updated during roadmap creation.
 | PROF-05 | Phase 2 | Complete |
 | PROF-06 | Phase 2 | Complete |
 | PROF-07 | Phase 2 | Complete |
-| CHKN-01 | Phase 3 | Pending |
-| CHKN-02 | Phase 3 | Pending |
-| CHKN-03 | Phase 3 | Pending |
-| CHKN-04 | Phase 3 | Pending |
-| CHKN-05 | Phase 3 | Pending |
-| CHKN-06 | Phase 3 | Pending |
-| CHKN-07 | Phase 3 | Pending |
-| SESS-05 | Phase 3 | Pending |
-| SESS-06 | Phase 3 | Pending |
+| CHKN-01 | Phase 3 | Complete |
+| CHKN-02 | Phase 3 | Complete |
+| CHKN-03 | Phase 3 | Complete |
+| CHKN-04 | Phase 3 | Complete |
+| CHKN-05 | Phase 3 | Complete |
+| CHKN-06 | Phase 3 | Complete |
+| CHKN-07 | Phase 3 | Complete |
+| SESS-05 | Phase 3 | Complete |
+| SESS-06 | Phase 3 | Complete |
 | SESS-01 | Phase 4 | Pending |
 | SESS-02 | Phase 4 | Pending |
 | SESS-03 | Phase 4 | Pending |

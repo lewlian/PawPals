@@ -89,9 +89,11 @@ Plans:
 **Plans:** 3 plans
 
 Plans:
-- [ ] 03-01-PLAN.md - Data layer (sessions table, session repository, geofence utility)
-- [ ] 03-02-PLAN.md - Check-in wizard (location, geofence, dog selection, duration)
-- [ ] 03-03-PLAN.md - Checkout handler and bot integration
+- [x] 03-01-PLAN.md - Data layer (sessions table, session repository, geofence utility)
+- [x] 03-02-PLAN.md - Check-in wizard (location, geofence, dog selection, duration)
+- [x] 03-03-PLAN.md - Checkout handler and bot integration
+
+**Status:** ✓ Complete (2026-01-30)
 
 **Requirements:**
 - **CHKN-01**: User can initiate check-in via /checkin command
