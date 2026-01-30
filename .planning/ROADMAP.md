@@ -29,7 +29,7 @@ Plans:
 - [x] 01-02-PLAN.md - Database layer with PostgreSQL and location seeding
 - [x] 01-03-PLAN.md - Telegram bot with all command handlers
 
-**Status:** ✓ Complete (2026-01-30)
+**Status:** Complete (2026-01-30)
 
 **Requirements:**
 - **CMDS-01**: /start shows welcome message with "Create Dog Profile" button
@@ -53,6 +53,13 @@ Plans:
 ### Phase 2: Dog Profiles
 
 **Goal:** Users can create and manage their dog profiles with complete metadata
+
+**Plans:** 3 plans
+
+Plans:
+- [ ] 02-01-PLAN.md - Database schema, types, and repositories for users/dogs
+- [ ] 02-02-PLAN.md - Profile creation wizard with WizardScene
+- [ ] 02-03-PLAN.md - Profile viewing, editing, and deletion
 
 **Requirements:**
 - **PROF-01**: User can create a dog profile with name
