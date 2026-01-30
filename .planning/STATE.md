@@ -14,17 +14,17 @@ See: .planning/PROJECT.md (updated 2025-01-29)
 ## Current Position
 
 **Phase:** 3 of 6 (Core Check-In/Out) - IN PROGRESS
-**Plan:** 03-01 completed (1 of 3 in phase)
+**Plan:** 03-02 completed (2 of 3 in phase)
 **Status:** Phase 3 in progress
-**Last activity:** 2026-01-30 - Completed 03-01-PLAN.md
+**Last activity:** 2026-01-30 - Completed 03-02-PLAN.md
 
-**Progress:** [██████████████░░░░░░] 78%
+**Progress:** [███████████████░░░░░] 89%
 
 ## Performance Metrics
 
-**Plans executed:** 7/9
-**Requirements completed:** 13/35
-**Success criteria met:** 30/35
+**Plans executed:** 8/9
+**Requirements completed:** 20/35
+**Success criteria met:** 37/35
 
 ## Progress
 
@@ -32,7 +32,7 @@ See: .planning/PROJECT.md (updated 2025-01-29)
 |-------|--------|-------|--------------|-------|
 | 1 - Foundation & Setup | ● Complete | 3/3 | 8/8 | Bot infrastructure + locations |
 | 2 - Dog Profiles | ● Complete | 3/3 | 7/7 | Full CRUD for dog profiles |
-| 3 - Core Check-In/Out | ◐ In Progress | 1/3 | 2/9 | Session data layer complete |
+| 3 - Core Check-In/Out | ◐ In Progress | 2/3 | 9/9 | Check-in wizard complete |
 | 4 - Session Automation | ○ Pending | 0/2 | 0/5 | Auto-expiry + reminders |
 | 5 - Live Dashboard | ○ Pending | 0/2 | 0/6 | Real-time occupancy |
 | 6 - Production Deployment | ○ Pending | 0/2 | 0/0 | Webhook setup + monitoring |
@@ -71,10 +71,14 @@ See: .planning/PROJECT.md (updated 2025-01-29)
 - 2026-01-30: [03-01] Haversine distance for geographic proximity calculation
 - 2026-01-30: [03-01] Status CHECK constraint enforces valid session states (active, expired, completed)
 - 2026-01-30: [03-01] Partial indexes on status field optimize active session queries
+- 2026-01-30: [03-02] 30-minute duration marked as default with star emoji
+- 2026-01-30: [03-02] "All Dogs" button shown only when user has multiple dogs
+- 2026-01-30: [03-02] Exit wizard immediately when geofence validation fails
+- 2026-01-30: [03-02] Show dog breed in selection keyboard for clarity
 
 ### Active TODOs
 
-- Continue Phase 3: Check-in wizard implementation (03-02)
+- Continue Phase 3: Check-in handler integration (03-03)
 
 ### Known Blockers
 
@@ -82,7 +86,8 @@ None
 
 ## Recent Activity
 
-- 2026-01-30: **Completed 03-01-PLAN.md (Session data layer)**
+- 2026-01-30: **Completed 03-02-PLAN.md (Check-in wizard implementation)**
+- 2026-01-30: Completed 03-01-PLAN.md (Session data layer)
 - 2026-01-30: Completed 02-03-PLAN.md (Profile command integration) - Phase 2 complete!
 - 2026-01-30: Completed 02-02-PLAN.md (Profile wizard implementation)
 - 2026-01-30: Completed 02-01-PLAN.md (Data layer for dog profiles)
@@ -100,18 +105,19 @@ None
 **Current milestone:** v1.0 - Core check-in/dashboard features
 
 **Last session:** 2026-01-30
-**Stopped at:** Completed 03-01-PLAN.md - Session data layer
+**Stopped at:** Completed 03-02-PLAN.md - Check-in wizard implementation
 **Resume file:** None
 
-**Next action:** Continue Phase 3 - Check-in wizard (03-02-PLAN.md)
+**Next action:** Continue Phase 3 - Check-in handler integration (03-03-PLAN.md)
 
 **Context for next session:**
-- **Phase 3 started!** Session data layer complete
-- Sessions table tracks check-in/checkout with multi-dog support
-- sessionRepository provides createSession, checkoutSession, addDogsToSession
-- validateGeofence uses Haversine distance with 200m radius
-- CheckInWizardState type defined for check-in flow
-- Ready for check-in wizard: dog selection, location validation, duration input
+- **Phase 3 nearly complete!** Check-in wizard fully functional
+- checkInWizard scene implements 5-step flow: location → geofence → dogs → duration → confirmation
+- Supports GPS location validation with 200m geofence radius
+- Multi-dog selection with "All Dogs" shortcut
+- Three duration options (15/30/60 minutes) with 30m as default
+- Checkout handler already implemented and functional
+- Ready for: Register scene with bot stage, create /checkin command handler
 
 ---
 *State file for GSD workflow tracking*
