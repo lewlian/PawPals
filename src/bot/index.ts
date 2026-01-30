@@ -1,14 +1,16 @@
-import { Telegraf } from 'telegraf';
+import { Telegraf, Scenes, session } from 'telegraf';
 import { validateEnv } from '../config/env.js';
+import type { BotContext } from '../types/session.js';
 import { startHandler } from './handlers/start.js';
 import { profileHandler } from './handlers/profile.js';
 import { checkinHandler } from './handlers/checkin.js';
 import { checkoutHandler } from './handlers/checkout.js';
 import { liveHandler } from './handlers/live.js';
+import { createDogProfileWizard } from './scenes/createDogProfile.js';
 
 const env = validateEnv();
 
-export const bot = new Telegraf(env.BOT_TOKEN);
+export const bot = new Telegraf<BotContext>(env.BOT_TOKEN);
 
 // Global error handler - prevents crashes from unhandled errors
 bot.catch((err, ctx) => {
@@ -18,6 +20,13 @@ bot.catch((err, ctx) => {
   });
 });
 
+// Session middleware MUST come before stage
+bot.use(session());
+
+// Create and register stage with all scenes
+const stage = new Scenes.Stage<BotContext>([createDogProfileWizard]);
+bot.use(stage.middleware());
+
 // Register command handlers
 bot.command('start', startHandler);
 bot.command('profile', profileHandler);
@@ -25,13 +34,10 @@ bot.command('checkin', checkinHandler);
 bot.command('checkout', checkoutHandler);
 bot.command('live', liveHandler);
 
-// Handle "Create Dog Profile" button callback
+// Handle "Create Dog Profile" button callback - enters wizard
 bot.action('create_profile', async (ctx) => {
-  await ctx.answerCbQuery(); // Remove loading state
-  await ctx.reply(
-    'Profile creation will be available in the next update!\n\n' +
-    'Use /profile to check when this feature becomes available.'
-  );
+  await ctx.answerCbQuery();
+  await ctx.scene.enter('create-dog-profile');
 });
 
 // Handle unknown commands gracefully
