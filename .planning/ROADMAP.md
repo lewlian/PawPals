@@ -86,6 +86,13 @@ Plans:
 
 **Goal:** Users can check in and out at dog runs with accurate geofence validation
 
+**Plans:** 3 plans
+
+Plans:
+- [ ] 03-01-PLAN.md - Data layer (sessions table, session repository, geofence utility)
+- [ ] 03-02-PLAN.md - Check-in wizard (location, geofence, dog selection, duration)
+- [ ] 03-03-PLAN.md - Checkout handler and bot integration
+
 **Requirements:**
 - **CHKN-01**: User can initiate check-in via /checkin command
 - **CHKN-02**: Bot requests one-time location share from user
