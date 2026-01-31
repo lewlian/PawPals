@@ -62,10 +62,10 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### UI Polish
 
-- [ ] **UIPOL-01**: Bot has Telegram menu button showing all available commands
-- [ ] **UIPOL-02**: Main screen shows reply keyboard with quick-access buttons (Check In, Live, Profile, Checkout)
-- [ ] **UIPOL-03**: All messages use consistent emoji prefixes for headers and status indicators
-- [ ] **UIPOL-04**: All inline buttons have emoji prefixes for visual clarity
+- [x] **UIPOL-01**: Bot has Telegram menu button showing all available commands
+- [x] **UIPOL-02**: Main screen shows reply keyboard with quick-access buttons (Check In, Live, Profile, Checkout)
+- [x] **UIPOL-03**: All messages use consistent emoji prefixes for headers and status indicators
+- [x] **UIPOL-04**: All inline buttons have emoji prefixes for visual clarity
 
 ## v2 Requirements
 
@@ -154,10 +154,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | DASH-05 | Phase 5 | Complete |
 | DASH-06 | Phase 5 | Complete |
 
-| UIPOL-01 | Phase 7 | Not Started |
-| UIPOL-02 | Phase 7 | Not Started |
-| UIPOL-03 | Phase 7 | Not Started |
-| UIPOL-04 | Phase 7 | Not Started |
+| UIPOL-01 | Phase 7 | Complete |
+| UIPOL-02 | Phase 7 | Complete |
+| UIPOL-03 | Phase 7 | Complete |
+| UIPOL-04 | Phase 7 | Complete |
 
 **Coverage:**
 - v1 requirements: 39 total
