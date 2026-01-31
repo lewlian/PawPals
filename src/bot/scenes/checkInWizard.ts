@@ -120,13 +120,13 @@ stepDogs.use(async (ctx) => {
 
   // Build dog selection keyboard
   const buttons = dogs.map(dog => [
-    Markup.button.callback(`${dog.name} (${dog.breed})`, `dog_${dog.id}`)
+    Markup.button.callback(`${EMOJI.dogs} ${dog.name} (${dog.breed})`, `dog_${dog.id}`)
   ]);
 
   // Add "All Dogs" option if multiple dogs
   if (dogs.length > 1) {
     buttons.unshift([
-      Markup.button.callback('All Dogs', 'dog_all')
+      Markup.button.callback(`${EMOJI.dogs} All Dogs`, 'dog_all')
     ]);
   }
 
@@ -163,9 +163,9 @@ stepDogCallback.action(/^dog_(\d+|all)$/, async (ctx) => {
   await ctx.editMessageText(
     'How long will you stay?',
     Markup.inlineKeyboard([
-      [Markup.button.callback('15 minutes', 'dur_15')],
-      [Markup.button.callback('30 minutes ⭐', 'dur_30')],
-      [Markup.button.callback('60 minutes', 'dur_60')]
+      [Markup.button.callback(`${EMOJI.timer} 15 minutes`, 'dur_15')],
+      [Markup.button.callback(`${EMOJI.timer} 30 minutes *`, 'dur_30')],
+      [Markup.button.callback(`${EMOJI.timer} 60 minutes`, 'dur_60')]
     ])
   );
 

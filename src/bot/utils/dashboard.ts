@@ -122,14 +122,14 @@ export function buildDashboardKeyboard(currentSort: 'nearest' | 'most_dogs') {
   return Markup.inlineKeyboard([
     [
       Markup.button.callback(
-        currentSort === 'nearest' ? '* Nearest' : 'Nearest',
+        currentSort === 'nearest' ? `${EMOJI.location} Nearest *` : `${EMOJI.location} Nearest`,
         'sort_nearest'
       ),
       Markup.button.callback(
-        currentSort === 'most_dogs' ? '* Most Dogs' : 'Most Dogs',
+        currentSort === 'most_dogs' ? `${EMOJI.dogs} Most Dogs *` : `${EMOJI.dogs} Most Dogs`,
         'sort_most_dogs'
       ),
     ],
-    [Markup.button.callback('Refresh', 'refresh_dashboard')],
+    [Markup.button.callback(`${EMOJI.refresh} Refresh`, 'refresh_dashboard')],
   ]);
 }

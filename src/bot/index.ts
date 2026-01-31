@@ -25,7 +25,7 @@ import { createDogProfileWizard } from './scenes/createDogProfile.js';
 import { editDogProfileWizard } from './scenes/editDogProfile.js';
 import { checkInWizard } from './scenes/checkInWizard.js';
 import { findDogById, deleteDog } from '../db/repositories/dogRepository.js';
-import { BUTTON_TEXT } from './constants/emoji.js';
+import { BUTTON_TEXT, EMOJI } from './constants/emoji.js';
 import { mainMenuKeyboard } from './keyboards/mainMenu.js';
 
 const env = validateEnv();
@@ -136,8 +136,8 @@ bot.action(/^delete_dog_(\d+)$/, async (ctx) => {
   await ctx.editMessageText(
     `Are you sure you want to delete ${dog.name}?\n\nThis cannot be undone.`,
     Markup.inlineKeyboard([
-      [Markup.button.callback('Yes, delete', `confirm_delete_${dogId}`)],
-      [Markup.button.callback('No, keep', `view_dog_${dogId}`)],
+      [Markup.button.callback(`${EMOJI.delete} Yes, delete`, `confirm_delete_${dogId}`)],
+      [Markup.button.callback(`${EMOJI.back} No, keep`, `view_dog_${dogId}`)],
     ])
   );
 });

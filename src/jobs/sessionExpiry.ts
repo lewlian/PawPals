@@ -58,11 +58,11 @@ function formatExpiryMessage(session: SessionForNotification): string {
 function buildExtendKeyboard(sessionId: number) {
   return Markup.inlineKeyboard([
     [
-      Markup.button.callback('15 min', `extend_${sessionId}_15`),
-      Markup.button.callback('30 min', `extend_${sessionId}_30`),
-      Markup.button.callback('60 min', `extend_${sessionId}_60`),
+      Markup.button.callback(`${EMOJI.extend} 15 min`, `extend_${sessionId}_15`),
+      Markup.button.callback(`${EMOJI.extend} 30 min`, `extend_${sessionId}_30`),
+      Markup.button.callback(`${EMOJI.extend} 60 min`, `extend_${sessionId}_60`),
     ],
-    [Markup.button.callback('Checkout now', `checkout_${sessionId}`)],
+    [Markup.button.callback(`${EMOJI.checkout} Checkout now`, `checkout_${sessionId}`)],
   ]);
 }
 

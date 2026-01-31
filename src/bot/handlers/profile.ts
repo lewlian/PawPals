@@ -3,6 +3,7 @@ import type { BotContext } from '../../types/session.js';
 import { findUserByTelegramId } from '../../db/repositories/userRepository.js';
 import { findDogsByUserId } from '../../db/repositories/dogRepository.js';
 import type { Dog } from '../../types/dog.js';
+import { EMOJI } from '../constants/emoji.js';
 
 /**
  * Format dog size with weight range for display
@@ -71,10 +72,10 @@ export function formatDogProfile(dog: Dog): string {
  */
 function buildDogListKeyboard(dogs: Dog[]) {
   const buttons = dogs.map((dog) => [
-    Markup.button.callback(`View ${dog.name}`, `view_dog_${dog.id}`),
+    Markup.button.callback(`${EMOJI.dogs} ${dog.name}`, `view_dog_${dog.id}`),
   ]);
 
-  buttons.push([Markup.button.callback('Add Another Dog', 'create_profile')]);
+  buttons.push([Markup.button.callback(`${EMOJI.add} Add Another Dog`, 'create_profile')]);
 
   return Markup.inlineKeyboard(buttons);
 }
@@ -85,15 +86,15 @@ function buildDogListKeyboard(dogs: Dog[]) {
 export function buildDogDetailKeyboard(dogId: number) {
   return Markup.inlineKeyboard([
     [
-      Markup.button.callback('Edit Name', `edit_dog_name_${dogId}`),
-      Markup.button.callback('Edit Size', `edit_dog_size_${dogId}`),
+      Markup.button.callback(`${EMOJI.edit} Edit Name`, `edit_dog_name_${dogId}`),
+      Markup.button.callback(`${EMOJI.edit} Edit Size`, `edit_dog_size_${dogId}`),
     ],
     [
-      Markup.button.callback('Edit Breed', `edit_dog_breed_${dogId}`),
-      Markup.button.callback('Edit Age', `edit_dog_age_${dogId}`),
+      Markup.button.callback(`${EMOJI.edit} Edit Breed`, `edit_dog_breed_${dogId}`),
+      Markup.button.callback(`${EMOJI.edit} Edit Age`, `edit_dog_age_${dogId}`),
     ],
-    [Markup.button.callback('Delete Dog', `delete_dog_${dogId}`)],
-    [Markup.button.callback('Back to List', 'profile_list')],
+    [Markup.button.callback(`${EMOJI.delete} Delete`, `delete_dog_${dogId}`)],
+    [Markup.button.callback(`${EMOJI.back} Back`, 'profile_list')],
   ]);
 }
 
