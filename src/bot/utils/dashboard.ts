@@ -1,10 +1,12 @@
 import { Markup } from 'telegraf';
 import haversineDistance from 'haversine-distance';
 import type { OccupancyData, ParkDisplay } from '../../types/dashboard.js';
+import { EMOJI } from '../constants/emoji.js';
 
 /**
- * Format size breakdown in abbreviated format
- * Single size simplification: "3 Small dogs" instead of "3 dogs (3S)"
+ * Format size breakdown with bullet separator
+ * Per CONTEXT.md: "5 dogs • 2 Small, 2 Medium, 1 Large"
+ * Single size simplification: "3 Small dogs"
  * Zero dogs: "0 dogs"
  */
 export function formatSizeBreakdown(small: number, medium: number, large: number): string {
@@ -15,9 +17,9 @@ export function formatSizeBreakdown(small: number, medium: number, large: number
   }
 
   const parts: string[] = [];
-  if (small > 0) parts.push(`${small}S`);
-  if (medium > 0) parts.push(`${medium}M`);
-  if (large > 0) parts.push(`${large}L`);
+  if (small > 0) parts.push(`${small} Small`);
+  if (medium > 0) parts.push(`${medium} Medium`);
+  if (large > 0) parts.push(`${large} Large`);
 
   // Single size simplification per user decision
   if (parts.length === 1) {
@@ -25,7 +27,7 @@ export function formatSizeBreakdown(small: number, medium: number, large: number
     return `${total} ${size} ${total === 1 ? 'dog' : 'dogs'}`;
   }
 
-  return `${total} dogs (${parts.join(', ')})`;
+  return `${total} dogs • ${parts.join(', ')}`;
 }
 
 /**
@@ -79,6 +81,10 @@ export function sortByDistance(
 
 /**
  * Format dashboard message for display
+ * Per CONTEXT.md emoji formatting:
+ * 📊 Live Dog Run Occupancy
+ * 📍 Park Name (distance)
+ * 🐕 5 dogs • 2 Small, 2 Medium, 1 Large
  */
 export function formatDashboard(parks: ParkDisplay[], showEmptyMessage: boolean = true): string {
   const now = new Date();
@@ -89,7 +95,7 @@ export function formatDashboard(parks: ParkDisplay[], showEmptyMessage: boolean 
     timeZone: 'Asia/Singapore',
   });
 
-  let message = `Live Dog Run Occupancy\nUpdated ${timestamp}\n\n`;
+  let message = `${EMOJI.live} Live Dog Run Occupancy\nUpdated ${timestamp}\n\n`;
 
   const hasAnyDogs = parks.some(p => p.totalDogs > 0);
   if (!hasAnyDogs && showEmptyMessage) {
@@ -102,12 +108,11 @@ export function formatDashboard(parks: ParkDisplay[], showEmptyMessage: boolean 
       ? ` (${park.distanceKm.toFixed(1)} km)`
       : '';
 
-    message += `${park.locationName}${distanceStr}: `;
-    message += formatSizeBreakdown(park.small, park.medium, park.large);
-    message += `${hereMarker}\n`;
+    message += `${EMOJI.location} ${park.locationName}${distanceStr}${hereMarker}\n`;
+    message += `${EMOJI.dogs} ${formatSizeBreakdown(park.small, park.medium, park.large)}\n\n`;
   }
 
-  return message;
+  return message.trim();
 }
 
 /**

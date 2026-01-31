@@ -4,6 +4,8 @@ import { validateGeofence } from '../utils/geofence.js';
 import { findDogsByUserId, findDogById } from '../../db/repositories/dogRepository.js';
 import { findOrCreateUser } from '../../db/repositories/userRepository.js';
 import { createSession, addDogsToSession } from '../../db/repositories/sessionRepository.js';
+import { EMOJI } from '../constants/emoji.js';
+import { mainMenuKeyboard } from '../keyboards/mainMenu.js';
 
 // Type guard for wizard state
 function getWizardState(ctx: BotContext): CheckInWizardState {
@@ -71,7 +73,7 @@ stepLocation.on('location', async (ctx) => {
   state.locationId = result.nearestLocation!.id;
   state.locationName = result.nearestLocation!.name;
 
-  await ctx.reply(`Location confirmed: ${state.locationName}\n\nLoading your dogs...`);
+  await ctx.reply(`${EMOJI.location} Location confirmed: ${state.locationName}\n\nLoading your dogs...`);
   return ctx.wizard.next();
 });
 
@@ -213,13 +215,19 @@ stepDuration.action(/^dur_(\d+)$/, async (ctx) => {
       hour12: true
     });
 
+    // Edit the inline message to show confirmation
     await ctx.editMessageText(
-      `✅ Check-in successful!\n\n` +
-      `Location: ${state.locationName}\n` +
-      `Dog(s): ${dogNames.join(', ')}\n` +
-      `Duration: ${durationMinutes} minutes\n` +
-      `Auto check-out at: ${expiryTime}\n\n` +
-      `Use /checkout to end your session early.`
+      `${EMOJI.checkedIn} Checked in!\n\n` +
+      `${EMOJI.location} ${state.locationName}\n` +
+      `${EMOJI.dogs} ${dogNames.join(', ')}\n` +
+      `${EMOJI.timer} ${durationMinutes} minutes\n\n` +
+      `Auto check-out at ${expiryTime}`
+    );
+
+    // Send a follow-up message with the main menu keyboard to restore reply keyboard
+    await ctx.reply(
+      'Use /checkout to end your session early.',
+      mainMenuKeyboard
     );
   } catch (error) {
     console.error('Error creating check-in session:', error);

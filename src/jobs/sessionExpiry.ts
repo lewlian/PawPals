@@ -6,6 +6,7 @@ import {
   expireSessions,
   type SessionForNotification,
 } from '../db/repositories/sessionRepository.js';
+import { EMOJI } from '../bot/constants/emoji.js';
 
 // Poll every 30 seconds
 const POLL_INTERVAL_MS = 30 * 1000;
@@ -27,8 +28,8 @@ function formatReminderMessage(session: SessionForNotification): string {
   const dogNamesText = session.dogNames.join(', ');
 
   return (
-    `Hey! Your session at ${session.locationName} ends in ${minutesLeft} min(s).\n\n` +
-    `Dog(s): ${dogNamesText}\n\n` +
+    `${EMOJI.reminder} ${minutesLeft} minutes left!\n` +
+    `${session.locationName} • ${dogNamesText}\n\n` +
     `Want to stay longer?`
   );
 }
@@ -43,9 +44,10 @@ function formatExpiryMessage(session: SessionForNotification): string {
   const dogNamesText = session.dogNames.join(', ');
 
   return (
-    `Your session at ${session.locationName} has ended.\n\n` +
-    `Dog(s): ${dogNamesText}\n` +
-    `Duration: ${durationMinutes} minutes\n\n` +
+    `${EMOJI.checkedOut} Session ended\n\n` +
+    `${EMOJI.location} ${session.locationName}\n` +
+    `${EMOJI.dogs} ${dogNamesText}\n` +
+    `${EMOJI.timer} ${durationMinutes} minutes\n\n` +
     `See you next time!`
   );
 }

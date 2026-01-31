@@ -7,6 +7,7 @@ import {
 } from '../../db/repositories/sessionRepository.js';
 import { getLocationById } from '../../db/locations.js';
 import { clearReminderTracking } from '../../jobs/sessionExpiry.js';
+import { EMOJI } from '../constants/emoji.js';
 
 // Context type for regex action callbacks (includes match array from Telegraf)
 type ActionContext = BotContext & { match: RegExpExecArray };
@@ -63,10 +64,10 @@ export async function handleExtendCallback(ctx: ActionContext): Promise<void> {
   const location = await getLocationById(extended.locationId);
 
   await ctx.editMessageText(
-    `Session extended by ${minutes} minutes!\n\n` +
-      `Location: ${location?.name ?? 'Unknown'}\n` +
-      `New end time: ${newExpiryTime}\n\n` +
-      `I'll remind you again before it expires.`
+    `${EMOJI.checkedIn} Session extended!\n\n` +
+      `${EMOJI.location} ${location?.name ?? 'Unknown'}\n` +
+      `${EMOJI.timer} New end time: ${newExpiryTime}\n\n` +
+      `I'll remind you before it expires.`
   );
 }
 
@@ -108,10 +109,10 @@ export async function handleCheckoutCallback(ctx: ActionContext): Promise<void> 
   );
 
   await ctx.editMessageText(
-    `Checked out successfully!\n\n` +
-      `Location: ${location?.name ?? 'Unknown'}\n` +
-      `Dog(s): ${dogNames}\n` +
-      `Duration: ${durationMinutes} minutes\n\n` +
+    `${EMOJI.checkedOut} Checked out!\n\n` +
+      `${EMOJI.location} ${location?.name ?? 'Unknown'}\n` +
+      `${EMOJI.dogs} ${dogNames}\n` +
+      `${EMOJI.timer} ${durationMinutes} minutes\n\n` +
       `See you next time!`
   );
 }

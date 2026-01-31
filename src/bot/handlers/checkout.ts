@@ -6,6 +6,7 @@ import {
 } from '../../db/repositories/sessionRepository.js';
 import { findOrCreateUser } from '../../db/repositories/userRepository.js';
 import { getLocationById } from '../../db/locations.js';
+import { EMOJI } from '../constants/emoji.js';
 
 /**
  * /checkout command handler
@@ -33,7 +34,8 @@ export async function checkoutHandler(ctx: Context): Promise<void> {
 
     if (!session) {
       await ctx.reply(
-        'You are not currently checked in to any dog run. Use /checkin when at a dog run to start a session.'
+        `${EMOJI.dogs} You're not checked in anywhere right now.\n\n` +
+        'Use /checkin when at a dog run to start a session.'
       );
       return;
     }
@@ -54,11 +56,11 @@ export async function checkoutHandler(ctx: Context): Promise<void> {
 
     // Send confirmation
     await ctx.reply(
-      '✅ Checked out successfully!\n\n' +
-        `Location: ${location?.name ?? 'Unknown'}\n` +
-        `Dog(s): ${dogs.map((d) => d.name).join(', ')}\n` +
-        `Session duration: ${durationMinutes} minutes\n\n` +
-        'Thanks for using PawPals SG!'
+      `${EMOJI.checkedOut} Checked out!\n\n` +
+        `${EMOJI.location} ${location?.name ?? 'Unknown'}\n` +
+        `${EMOJI.dogs} ${dogs.map((d) => d.name).join(', ')}\n` +
+        `${EMOJI.timer} ${durationMinutes} minutes\n\n` +
+        'See you next time!'
     );
   } catch (error) {
     console.error('Error during checkout:', error);
