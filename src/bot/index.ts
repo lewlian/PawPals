@@ -25,6 +25,8 @@ import { createDogProfileWizard } from './scenes/createDogProfile.js';
 import { editDogProfileWizard } from './scenes/editDogProfile.js';
 import { checkInWizard } from './scenes/checkInWizard.js';
 import { findDogById, deleteDog } from '../db/repositories/dogRepository.js';
+import { BUTTON_TEXT } from './constants/emoji.js';
+import { mainMenuKeyboard } from './keyboards/mainMenu.js';
 
 const env = validateEnv();
 
@@ -190,6 +192,27 @@ bot.on('location', async (ctx) => {
   await handleNearestLocation(ctx, userLat, userLon);
 });
 
+// Reply keyboard button handlers
+bot.hears(BUTTON_TEXT.checkIn, async (ctx) => {
+  if (ctx.scene.current) return; // Skip if in wizard
+  await ctx.scene.enter('check-in-wizard');
+});
+
+bot.hears(BUTTON_TEXT.checkout, async (ctx) => {
+  if (ctx.scene.current) return;
+  await checkoutHandler(ctx);
+});
+
+bot.hears(BUTTON_TEXT.profile, async (ctx) => {
+  if (ctx.scene.current) return;
+  await profileHandler(ctx);
+});
+
+bot.hears(BUTTON_TEXT.live, async (ctx) => {
+  if (ctx.scene.current) return;
+  await liveHandler(ctx);
+});
+
 // Handle "Cancel" button for nearest sort location request
 bot.hears('Cancel', async (ctx) => {
   // Only handle if not in a scene
@@ -212,3 +235,6 @@ bot.on('text', async (ctx) => {
     );
   }
 });
+
+// Re-export mainMenuKeyboard for use by handlers
+export { mainMenuKeyboard };

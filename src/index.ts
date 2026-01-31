@@ -1,4 +1,5 @@
 import express from 'express';
+import type { BotCommand } from 'telegraf/types';
 import { bot } from './bot/index.js';
 import { closePool, checkConnection } from './db/client.js';
 import { startAllJobs, stopAllJobs } from './jobs/index.js';
@@ -16,6 +17,16 @@ async function main(): Promise<void> {
     process.exit(1);
   }
   console.log('Database connected');
+
+  // Register menu commands with Telegram
+  const commands: BotCommand[] = [
+    { command: 'checkin', description: 'Check in at a dog run' },
+    { command: 'checkout', description: 'End your session' },
+    { command: 'live', description: 'See parks with dogs now' },
+    { command: 'profile', description: 'Manage dog profiles' },
+  ];
+  await bot.telegram.setMyCommands(commands);
+  console.log('Menu commands registered');
 
   // Start background jobs
   startAllJobs();

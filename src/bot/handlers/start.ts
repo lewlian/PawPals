@@ -1,28 +1,27 @@
-import { Context } from 'telegraf';
+import { Context, Markup } from 'telegraf';
+import { mainMenuKeyboard } from '../keyboards/mainMenu.js';
+import { EMOJI } from '../constants/emoji.js';
 
 /**
  * /start command handler
- * Shows welcome message with "Create Dog Profile" button
+ * Shows welcome message with persistent reply keyboard and "Create Dog Profile" button
  * Requirement: CMDS-01
  */
 export async function startHandler(ctx: Context): Promise<void> {
-  const welcomeMessage = `Welcome to PawPals SG!
+  const welcomeMessage = `${EMOJI.welcome} Welcome to PawPals SG!
 
-Check real-time dog run occupancy across Singapore before making the trip.
+\u2022 Check dog park occupancy
+\u2022 See size breakdowns
+\u2022 Never arrive to empty parks`;
 
-Get started by creating your dog's profile, then check in when you arrive at a dog run.
+  // Send welcome message with persistent reply keyboard
+  await ctx.reply(welcomeMessage, mainMenuKeyboard);
 
-Commands:
-/profile - Manage your dog profiles
-/checkin - Check in at a dog run
-/checkout - End your current session
-/live - View live occupancy`;
-
-  await ctx.reply(welcomeMessage, {
-    reply_markup: {
-      inline_keyboard: [[
-        { text: 'Create Dog Profile', callback_data: 'create_profile' }
-      ]]
-    }
-  });
+  // Send separate message with inline button for profile creation
+  await ctx.reply(
+    'Get started by creating your dog\'s profile:',
+    Markup.inlineKeyboard([[
+      Markup.button.callback(`${EMOJI.dogs} Create Dog Profile`, 'create_profile')
+    ]])
+  );
 }
