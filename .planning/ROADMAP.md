@@ -209,10 +209,10 @@ Plans:
 **Plans:** 2 plans
 
 Plans:
-- [ ] 07-01-PLAN.md - Telegram menu commands and reply keyboard buttons
-- [ ] 07-02-PLAN.md - Emoji styling for messages, buttons, and dashboard
+- [ ] 07-01-PLAN.md - Menu commands, emoji constants, and persistent reply keyboard
+- [ ] 07-02-PLAN.md - Emoji styling for all messages and inline buttons
 
-**Status:** Not started
+**Status:** Planned (2026-01-31)
 
 **Requirements:**
 - **UIPOL-01**: Bot has Telegram menu button showing all available commands
