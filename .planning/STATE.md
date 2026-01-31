@@ -13,18 +13,18 @@ See: .planning/PROJECT.md (updated 2025-01-29)
 
 ## Current Position
 
-**Phase:** 7 of 7 (UI Polish) - Not Started
-**Plan:** 0 of 2 in phase
-**Status:** Ready to plan Phase 7
-**Last activity:** 2026-01-31 - Added Phase 7 (UI Polish) to v1.0 roadmap
+**Phase:** 7 of 7 (UI Polish) - In Progress
+**Plan:** 1 of 2 in phase
+**Status:** Completed 07-01 (menu commands and keyboard)
+**Last activity:** 2026-01-31 - Completed 07-01-PLAN.md (menu commands and reply keyboard)
 
-**Progress:** [██████████████████░░] 88% (15/17 plans complete)
+**Progress:** [███████████████████░] 94% (16/17 plans complete)
 
 ## Performance Metrics
 
-**Plans executed:** 15/17 (Phase 7 pending)
-**Requirements completed:** 35/39
-**Success criteria met:** 70/78
+**Plans executed:** 16/17 (07-02 pending)
+**Requirements completed:** 37/39
+**Success criteria met:** 74/78
 
 ## Progress
 
@@ -36,7 +36,7 @@ See: .planning/PROJECT.md (updated 2025-01-29)
 | 4 - Session Automation | ● Complete | 2/2 | 5/5 | Background expiry job operational |
 | 5 - Live Dashboard | ● Complete | 2/2 | 6/6 | Dashboard with sorting + refresh |
 | 6 - Production Deployment | ● Complete | 2/2 | 0/0 | Live on Railway with webhooks |
-| 7 - UI Polish | ○ Not Started | 0/2 | 0/4 | Menu buttons + emoji styling |
+| 7 - UI Polish | ◐ In Progress | 1/2 | 2/4 | Menu buttons complete, emoji styling pending |
 
 ## Accumulated Context
 
@@ -100,6 +100,10 @@ See: .planning/PROJECT.md (updated 2025-01-29)
 - 2026-01-31: [06-02] Supabase Transaction Pooler for IPv6-compatible database connections
 - 2026-01-31: [06-02] Railway domain routes to port 8080 (Railway-injected PORT)
 - 2026-01-31: [06-02] SSL rejectUnauthorized: false for Supabase pooler
+- 2026-01-31: [07-01] Persistent reply keyboard with resize() for compact display
+- 2026-01-31: [07-01] Two-message approach for start: welcome with keyboard, then inline button
+- 2026-01-31: [07-01] Menu commands registered at startup before bot launch
+- 2026-01-31: [07-01] Button handlers skip if ctx.scene.current to avoid wizard interference
 
 ### Active TODOs
 
@@ -111,6 +115,7 @@ None
 
 ## Recent Activity
 
+- 2026-01-31: **Completed 07-01-PLAN.md (Menu commands and reply keyboard)**
 - 2026-01-31: Added Phase 7 (UI Polish) to v1.0 roadmap - menu buttons + emoji styling
 - 2026-01-31: **Completed 06-02-PLAN.md (Railway deployment)** - Bot live in production!
 - 2026-01-30: Completed 06-01-PLAN.md (Production environment & admin notifications)
@@ -138,10 +143,10 @@ None
 **Current milestone:** v1.0 - Core features + UI Polish
 
 **Last session:** 2026-01-31
-**Stopped at:** Added Phase 7 (UI Polish) to complete v1.0
+**Stopped at:** Completed 07-01-PLAN.md (menu commands and reply keyboard)
 **Resume file:** None
 
-**Next action:** Plan and execute Phase 7 (UI Polish)
+**Next action:** Execute 07-02-PLAN.md (emoji styling)
 
 **Production Details:**
 - URL: pawpals-production.up.railway.app
@@ -150,4 +155,4 @@ None
 
 ---
 *State file for GSD workflow tracking*
-*Last synchronized: 2026-01-31*
+*Last synchronized: 2026-01-31T06:12:41Z*
