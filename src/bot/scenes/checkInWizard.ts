@@ -3,7 +3,14 @@ import type { BotContext, CheckInWizardState } from '../../types/session.js';
 import { validateGeofence } from '../utils/geofence.js';
 import { findDogsByUserId, findDogById } from '../../db/repositories/dogRepository.js';
 import { findOrCreateUser } from '../../db/repositories/userRepository.js';
-import { createSession, addDogsToSession } from '../../db/repositories/sessionRepository.js';
+import {
+  createSession,
+  addDogsToSession,
+  getActiveSessionByUserId,
+  checkoutSession,
+  getDogsBySessionId,
+} from '../../db/repositories/sessionRepository.js';
+import { getLocationById } from '../../db/locations.js';
 import { EMOJI } from '../constants/emoji.js';
 import { mainMenuKeyboard } from '../keyboards/mainMenu.js';
 
@@ -194,6 +201,22 @@ stepDuration.action(/^dur_(\d+)$/, async (ctx) => {
   }
 
   try {
+    // Check for existing active session and auto-checkout if found
+    const existingSession = await getActiveSessionByUserId(state.userId);
+    let autoCheckoutMessage = '';
+
+    if (existingSession) {
+      // Get the previous location name for notification
+      const prevLocation = await getLocationById(existingSession.locationId);
+      const prevDogs = await getDogsBySessionId(existingSession.id);
+      const prevDogNames = prevDogs.map(d => d.name).join(', ');
+
+      // Auto-checkout the existing session
+      await checkoutSession(existingSession.id);
+
+      autoCheckoutMessage = `\n\n${EMOJI.checkout} Auto-checked out from ${prevLocation?.name ?? 'previous park'} (${prevDogNames})`;
+    }
+
     // Create session
     const session = await createSession(state.userId, state.locationId, durationMinutes);
 
@@ -221,7 +244,8 @@ stepDuration.action(/^dur_(\d+)$/, async (ctx) => {
       `${EMOJI.location} ${state.locationName}\n` +
       `${EMOJI.dogs} ${dogNames.join(', ')}\n` +
       `${EMOJI.timer} ${durationMinutes} minutes\n\n` +
-      `Auto check-out at ${expiryTime}`
+      `Auto check-out at ${expiryTime}` +
+      autoCheckoutMessage
     );
 
     // Send a follow-up message with the main menu keyboard to restore reply keyboard

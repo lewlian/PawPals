@@ -9,7 +9,9 @@
     "build": "tsc",
     "start": "node dist/index.js",
     "db:migrate": "tsx src/db/migrate.ts",
-    "db:seed": "tsx src/db/seed.ts"
+    "db:seed": "tsx src/db/seed.ts",
+    "demo:seed": "tsx scripts/demo-seed.ts",
+    "demo:clear": "tsx scripts/demo-seed.ts clear"
   },
   "keywords": [
     "telegram",

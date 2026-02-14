@@ -11,11 +11,58 @@ import { EMOJI } from '../bot/constants/emoji.js';
 // Poll every 30 seconds
 const POLL_INTERVAL_MS = 30 * 1000;
 
-// Track sent reminders to avoid duplicates (session IDs)
-const sentReminders = new Set<number>();
+// Max age for reminder tracking (2 hours in ms)
+const REMINDER_MAX_AGE_MS = 2 * 60 * 60 * 1000;
+
+// Max concurrent Telegram API calls to avoid rate limiting
+const MAX_CONCURRENT_NOTIFICATIONS = 5;
+
+/**
+ * Execute promises with concurrency limit
+ * Processes items in batches to avoid overwhelming Telegram API
+ */
+async function processWithConcurrency<T, R>(
+  items: T[],
+  processor: (item: T) => Promise<R>,
+  concurrency: number
+): Promise<R[]> {
+  const results: R[] = [];
+
+  for (let i = 0; i < items.length; i += concurrency) {
+    const batch = items.slice(i, i + concurrency);
+    const batchResults = await Promise.all(batch.map(processor));
+    results.push(...batchResults);
+  }
+
+  return results;
+}
+
+// Track sent reminders with timestamps to avoid duplicates and enable cleanup
+// Map: session ID -> timestamp when reminder was sent
+const sentReminders = new Map<number, number>();
 
 // Job state
 let intervalId: NodeJS.Timeout | null = null;
+
+/**
+ * Clean up old reminder tracking entries to prevent memory leaks
+ * Removes entries older than REMINDER_MAX_AGE_MS
+ */
+function cleanupOldReminders(): void {
+  const now = Date.now();
+  let cleaned = 0;
+
+  for (const [sessionId, timestamp] of sentReminders) {
+    if (now - timestamp > REMINDER_MAX_AGE_MS) {
+      sentReminders.delete(sessionId);
+      cleaned++;
+    }
+  }
+
+  if (cleaned > 0) {
+    console.log(`Cleaned up ${cleaned} old reminder tracking entries`);
+  }
+}
 
 /**
  * Format reminder message - casual & friendly per CONTEXT.md
@@ -107,31 +154,46 @@ async function sendExpiryNotification(session: SessionForNotification): Promise<
  */
 export async function processSessionExpiry(): Promise<void> {
   try {
+    // Clean up old reminder entries to prevent memory leaks
+    cleanupOldReminders();
+
     // 1. Handle sessions needing reminder (expiring within 6 minutes)
     const sessionsNeedingReminder = await getSessionsNeedingReminder();
 
-    for (const session of sessionsNeedingReminder) {
-      // Skip if we already sent a reminder for this session
-      if (sentReminders.has(session.id)) {
-        continue;
-      }
+    // Filter out sessions we've already sent reminders for
+    const sessionsToRemind = sessionsNeedingReminder.filter(
+      session => !sentReminders.has(session.id)
+    );
 
-      await sendExpiryReminder(session);
-      sentReminders.add(session.id);
+    // Send reminders in parallel with concurrency limit
+    if (sessionsToRemind.length > 0) {
+      await processWithConcurrency(
+        sessionsToRemind,
+        async (session) => {
+          await sendExpiryReminder(session);
+          sentReminders.set(session.id, Date.now());
+        },
+        MAX_CONCURRENT_NOTIFICATIONS
+      );
     }
 
     // 2. Handle expired sessions
     const expiredSessions = await getExpiredSessions();
 
-    for (const session of expiredSessions) {
-      // Send expiry notification
-      await sendExpiryNotification(session);
+    if (expiredSessions.length > 0) {
+      // Send expiry notifications in parallel with concurrency limit
+      await processWithConcurrency(
+        expiredSessions,
+        async (session) => {
+          await sendExpiryNotification(session);
+          sentReminders.delete(session.id);
+        },
+        MAX_CONCURRENT_NOTIFICATIONS
+      );
 
-      // Mark session as expired in database
-      await expireSessions([session.id]);
-
-      // Clean up reminder tracking
-      sentReminders.delete(session.id);
+      // Batch update all expired sessions in database (more efficient)
+      const expiredIds = expiredSessions.map(s => s.id);
+      await expireSessions(expiredIds);
     }
   } catch (error) {
     // Log error but don't crash the job

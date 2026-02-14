@@ -23,6 +23,9 @@ export async function liveHandler(ctx: Context): Promise<void> {
     return;
   }
 
+  // Show typing indicator while loading data
+  await ctx.sendChatAction('typing');
+
   // Get user from database
   const user = await findOrCreateUser(
     from.id,
