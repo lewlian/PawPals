@@ -52,7 +52,7 @@ export async function createSession(
   durationMinutes: number
 ): Promise<Session> {
   const result = await pool.query<SessionRow>(
-    `INSERT INTO sessions (user_id, location_id, expires_at, status)
+    `INSERT INTO public.sessions (user_id, location_id, expires_at, status)
      VALUES ($1, $2, NOW() + ($3 || ' minutes')::INTERVAL, 'active')
      RETURNING *`,
     [userId, locationId, durationMinutes]
@@ -66,7 +66,7 @@ export async function createSession(
  */
 export async function getActiveSessionByUserId(userId: number): Promise<Session | null> {
   const result = await pool.query<SessionRow>(
-    `SELECT * FROM sessions
+    `SELECT * FROM public.sessions
      WHERE user_id = $1 AND status = 'active'
      ORDER BY created_at DESC
      LIMIT 1`,
@@ -85,7 +85,7 @@ export async function getActiveSessionByUserId(userId: number): Promise<Session 
  */
 export async function checkoutSession(sessionId: number): Promise<Session | null> {
   const result = await pool.query<SessionRow>(
-    `UPDATE sessions
+    `UPDATE public.sessions
      SET checked_out_at = NOW(),
          status = 'completed',
          updated_at = NOW()
@@ -106,7 +106,7 @@ export async function checkoutSession(sessionId: number): Promise<Session | null
  */
 export async function findSessionById(sessionId: number): Promise<Session | null> {
   const result = await pool.query<SessionRow>(
-    'SELECT * FROM sessions WHERE id = $1',
+    'SELECT * FROM public.sessions WHERE id = $1',
     [sessionId]
   );
 
@@ -136,7 +136,7 @@ export async function addDogsToSession(sessionId: number, dogIds: number[]): Pro
   });
 
   await pool.query(
-    `INSERT INTO session_dogs (session_id, dog_id)
+    `INSERT INTO public.session_dogs (session_id, dog_id)
      VALUES ${placeholders.join(', ')}
      ON CONFLICT (session_id, dog_id) DO NOTHING`,
     values
@@ -149,8 +149,8 @@ export async function addDogsToSession(sessionId: number, dogIds: number[]): Pro
 export async function getDogsBySessionId(sessionId: number): Promise<Dog[]> {
   const result = await pool.query(
     `SELECT d.id, d.user_id, d.name, d.size, d.breed, d.age, d.created_at, d.updated_at
-     FROM dogs d
-     INNER JOIN session_dogs sd ON sd.dog_id = d.id
+     FROM public.dogs d
+     INNER JOIN public.session_dogs sd ON sd.dog_id = d.id
      WHERE sd.session_id = $1
      ORDER BY d.name ASC`,
     [sessionId]
@@ -192,11 +192,11 @@ export async function getSessionsNeedingReminder(): Promise<SessionForNotificati
        s.checked_in_at,
        s.expires_at,
        ARRAY_AGG(d.name ORDER BY d.name) as dog_names
-     FROM sessions s
-     INNER JOIN users u ON s.user_id = u.id
-     INNER JOIN locations l ON s.location_id = l.id
-     INNER JOIN session_dogs sd ON s.id = sd.session_id
-     INNER JOIN dogs d ON sd.dog_id = d.id
+     FROM public.sessions s
+     INNER JOIN public.users u ON s.user_id = u.id
+     INNER JOIN public.locations l ON s.location_id = l.id
+     INNER JOIN public.session_dogs sd ON s.id = sd.session_id
+     INNER JOIN public.dogs d ON sd.dog_id = d.id
      WHERE s.status = 'active'
        AND s.expires_at > NOW()
        AND s.expires_at <= NOW() + INTERVAL '6 minutes'
@@ -239,11 +239,11 @@ export async function getExpiredSessions(): Promise<SessionForNotification[]> {
        s.checked_in_at,
        s.expires_at,
        ARRAY_AGG(d.name ORDER BY d.name) as dog_names
-     FROM sessions s
-     INNER JOIN users u ON s.user_id = u.id
-     INNER JOIN locations l ON s.location_id = l.id
-     INNER JOIN session_dogs sd ON s.id = sd.session_id
-     INNER JOIN dogs d ON sd.dog_id = d.id
+     FROM public.sessions s
+     INNER JOIN public.users u ON s.user_id = u.id
+     INNER JOIN public.locations l ON s.location_id = l.id
+     INNER JOIN public.session_dogs sd ON s.id = sd.session_id
+     INNER JOIN public.dogs d ON sd.dog_id = d.id
      WHERE s.status = 'active'
        AND s.expires_at <= NOW()
      GROUP BY s.id, s.user_id, u.telegram_id, s.location_id, l.name, s.checked_in_at, s.expires_at
@@ -271,7 +271,7 @@ export async function expireSessions(sessionIds: number[]): Promise<void> {
   }
 
   await pool.query(
-    `UPDATE sessions
+    `UPDATE public.sessions
      SET status = 'expired',
          updated_at = NOW()
      WHERE id = ANY($1)`,
@@ -287,7 +287,7 @@ export async function extendSession(
   additionalMinutes: number
 ): Promise<Session | null> {
   const result = await pool.query<SessionRow>(
-    `UPDATE sessions
+    `UPDATE public.sessions
      SET expires_at = expires_at + ($2 || ' minutes')::INTERVAL,
          updated_at = NOW()
      WHERE id = $1 AND status = 'active'
@@ -326,10 +326,10 @@ export async function getOccupancyByLocation(): Promise<OccupancyData[]> {
       COALESCE(COUNT(sd.dog_id) FILTER (WHERE d.size = 'Small'), 0) as small_count,
       COALESCE(COUNT(sd.dog_id) FILTER (WHERE d.size = 'Medium'), 0) as medium_count,
       COALESCE(COUNT(sd.dog_id) FILTER (WHERE d.size = 'Large'), 0) as large_count
-    FROM locations l
-    LEFT JOIN sessions s ON s.location_id = l.id AND s.status = 'active'
-    LEFT JOIN session_dogs sd ON sd.session_id = s.id
-    LEFT JOIN dogs d ON d.id = sd.dog_id
+    FROM public.locations l
+    LEFT JOIN public.sessions s ON s.location_id = l.id AND s.status = 'active'
+    LEFT JOIN public.session_dogs sd ON sd.session_id = s.id
+    LEFT JOIN public.dogs d ON d.id = sd.dog_id
     GROUP BY l.id, l.name, l.latitude, l.longitude
     ORDER BY l.name
   `);

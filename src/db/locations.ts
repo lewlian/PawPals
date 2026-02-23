@@ -16,14 +16,14 @@ export interface Location {
 export async function getAllLocations(region?: string): Promise<Location[]> {
   if (region) {
     const result = await pool.query<Location>(
-      'SELECT * FROM locations WHERE region = $1 ORDER BY name',
+      'SELECT * FROM public.locations WHERE region = $1 ORDER BY name',
       [region]
     );
     return result.rows;
   }
 
   const result = await pool.query<Location>(
-    'SELECT * FROM locations ORDER BY name'
+    'SELECT * FROM public.locations ORDER BY name'
   );
   return result.rows;
 }
@@ -33,7 +33,7 @@ export async function getAllLocations(region?: string): Promise<Location[]> {
  */
 export async function getLocationById(id: number): Promise<Location | null> {
   const result = await pool.query<Location>(
-    'SELECT * FROM locations WHERE id = $1',
+    'SELECT * FROM public.locations WHERE id = $1',
     [id]
   );
   return result.rows[0] || null;
@@ -44,7 +44,7 @@ export async function getLocationById(id: number): Promise<Location | null> {
  */
 export async function getLocationByName(name: string): Promise<Location | null> {
   const result = await pool.query<Location>(
-    'SELECT * FROM locations WHERE name = $1',
+    'SELECT * FROM public.locations WHERE name = $1',
     [name]
   );
   return result.rows[0] || null;

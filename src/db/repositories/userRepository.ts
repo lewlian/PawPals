@@ -36,7 +36,7 @@ export async function findUserByTelegramId(
   telegramId: number
 ): Promise<User | null> {
   const result = await pool.query<UserRow>(
-    'SELECT * FROM users WHERE telegram_id = $1',
+    'SELECT * FROM public.users WHERE telegram_id = $1',
     [telegramId]
   );
 
@@ -57,7 +57,7 @@ export async function findOrCreateUser(
   username?: string
 ): Promise<User> {
   const result = await pool.query<UserRow>(
-    `INSERT INTO users (telegram_id, first_name, username)
+    `INSERT INTO public.users (telegram_id, first_name, username)
      VALUES ($1, $2, $3)
      ON CONFLICT (telegram_id) DO UPDATE SET
        first_name = EXCLUDED.first_name,

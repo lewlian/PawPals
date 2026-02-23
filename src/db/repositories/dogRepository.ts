@@ -33,7 +33,7 @@ export async function createDog(
   input: CreateDogInput
 ): Promise<Dog> {
   const result = await pool.query<DogRow>(
-    `INSERT INTO dogs (user_id, name, size, breed, age)
+    `INSERT INTO public.dogs (user_id, name, size, breed, age)
      VALUES ($1, $2, $3, $4, $5)
      RETURNING *`,
     [userId, input.name, input.size, input.breed, input.age]
@@ -47,7 +47,7 @@ export async function createDog(
  */
 export async function findDogsByUserId(userId: number): Promise<Dog[]> {
   const result = await pool.query<DogRow>(
-    'SELECT * FROM dogs WHERE user_id = $1 ORDER BY created_at ASC',
+    'SELECT * FROM public.dogs WHERE user_id = $1 ORDER BY created_at ASC',
     [userId]
   );
 
@@ -59,7 +59,7 @@ export async function findDogsByUserId(userId: number): Promise<Dog[]> {
  */
 export async function findDogById(id: number): Promise<Dog | null> {
   const result = await pool.query<DogRow>(
-    'SELECT * FROM dogs WHERE id = $1',
+    'SELECT * FROM public.dogs WHERE id = $1',
     [id]
   );
 
@@ -111,7 +111,7 @@ export async function updateDog(
   values.push(id);
 
   const result = await pool.query<DogRow>(
-    `UPDATE dogs SET ${updates.join(', ')} WHERE id = $${paramIndex} RETURNING *`,
+    `UPDATE public.dogs SET ${updates.join(', ')} WHERE id = $${paramIndex} RETURNING *`,
     values
   );
 
@@ -126,6 +126,6 @@ export async function updateDog(
  * Delete a dog by ID
  */
 export async function deleteDog(id: number): Promise<boolean> {
-  const result = await pool.query('DELETE FROM dogs WHERE id = $1', [id]);
+  const result = await pool.query('DELETE FROM public.dogs WHERE id = $1', [id]);
   return (result.rowCount ?? 0) > 0;
 }
