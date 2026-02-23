@@ -122,7 +122,7 @@ async function seed(): Promise<void> {
 
     // Verify count
     const countResult = await pool.query('SELECT COUNT(*) FROM locations');
-    console.log(`Total locations in database: ${countResult.rows[0].count}`);
+    console.log(`Total locations in database: ${countResult.rows[0]?.count}`);
 
   } catch (error) {
     console.error('Seeding failed:', error);
